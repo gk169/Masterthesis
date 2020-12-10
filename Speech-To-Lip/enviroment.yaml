@@ -9,6 +9,7 @@ dependencies:
  - ipywidgets>=7.5
  - librosa>=0.8
  - numpy>=1.19
+ - opencv>=4.0
  - python>=3.6
  - pytorch>=1.7
  - spyder>=4.1
