@@ -1,0 +1,8 @@
+# Spyder project folders
+**/.spyproject
+
+# Data folders
+**/data
+
+# Trained weights folders
+**/weights
