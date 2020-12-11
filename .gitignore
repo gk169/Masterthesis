@@ -1,6 +1,9 @@
 # Spyder project folders
 **/.spyproject
 
+# Jupyter notebook checkpoint folders
+**/.ipynb_checkpoints
+
 # Data folders
 **/data
 
