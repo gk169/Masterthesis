@@ -5,8 +5,10 @@ import torch
 import ffmpeg
 from datetime import datetime
 
-import sys
-sys.path.append('Wav2Lip')
+import sys, pathlib
+Wav2Lip_Path = str(pathlib.Path(__file__).parent.resolve().joinpath('Wav2Lip'))
+if not Wav2Lip_Path in sys.path:
+    sys.path.append(Wav2Lip_Path)
 
 import audio
 import face_detection
