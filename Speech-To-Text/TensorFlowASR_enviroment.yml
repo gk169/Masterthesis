@@ -1,11 +1,12 @@
-name: TensorFlowTTS
+name: TensorFlowASR
 channels:
  - anaconda
  - conda-forge
+ - pytorch
 dependencies:
  - python=3.7
 
-# cd TensorFlowTTS
+# cd TensorFlowASR
 # pip install .
 
 # pip install -r requirements.txt
