@@ -1,3 +1,6 @@
 [submodule "Speech-To-Lip/Wav2Lip"]
 	path = Speech-To-Lip/Wav2Lip
 	url = https://github.com/gk169/Wav2Lip.git
+[submodule "Text-To-Speech/TensorFlowTTS"]
+	path = Text-To-Speech/TensorFlowTTS
+	url = https://github.com/gk169/TensorFlowTTS.git
