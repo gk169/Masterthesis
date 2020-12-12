@@ -4,6 +4,3 @@
 [submodule "Text-To-Speech/TensorFlowTTS"]
 	path = Text-To-Speech/TensorFlowTTS
 	url = https://github.com/gk169/TensorFlowTTS.git
-[submodule "Speech-To-Text/TensorFlowASR"]
-	path = Speech-To-Text/TensorFlowASR
-	url = https://github.com/gk169/TensorFlowASR.git
