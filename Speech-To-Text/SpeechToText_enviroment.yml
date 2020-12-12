@@ -10,4 +10,4 @@ dependencies:
 
 # pipwin install pocketsphinx
 
-# copy languages from /languages to <env>/Lib/site-packages/speech_recognition/pocketsphinx-data
+# copy languages from /models to <env>/Lib/site-packages/speech_recognition/pocketsphinx-data
