@@ -14,19 +14,37 @@ import audio
 import face_detection
 from models import Wav2Lip
 
+
+Common_File_Path = pathlib.Path(__file__).parent.parent.parent
 # Checkpoint_Path: Name of saved checkpoint to load weights from
-Wav2Lip_Weights_Path = 'weights/wav2lip.pth'
+Wav2Lip_Weights_Path = str(Common_File_Path
+                           .joinpath('weights')
+                           .joinpath('Wav2Lip')
+                           .joinpath('wav2lip.pth'))
 
 # Face: Filepath of video/image that contains faces to use
-Input_Video_Path = 'data/video/Biden_short.mp4'
+Input_Video_Path = str(Common_File_Path
+                       .joinpath('data')
+                       .joinpath('original')
+                       .joinpath('videos')
+                       .joinpath('Biden_short.mp4'))
 
 # Audio: Filepath of video/audio file to use as raw audio source
-Input_Audio_Path = 'data/audio/Merkel_short.mp3'
+Input_Audio_Path = str(Common_File_Path
+                       .joinpath('data')
+                       .joinpath('original')
+                       .joinpath('audios')
+                       .joinpath('Merkel_short.mp3'))
 
 # Outfile: Video path to save result. See default for an e.g.
 now = datetime.now()
 dt_string = now.strftime("%Y-%m-%d_%H-%M-%S")
-Output_Video_Path = 'data/generated/' + dt_string + '.mp4'
+
+Output_Video_Path = str(Common_File_Path
+                       .joinpath('data')
+                       .joinpath('generated')
+                       .joinpath('videos')
+                       .joinpath('Wav2Lip_' + dt_string + '.mp4'))
 
 # Pads: default=[0, 10, 0, 0], Padding (top, bottom, left, right). Please adjust to include chin at least
 Pads = [0, 10, 0, 0]
@@ -50,8 +68,13 @@ Nosmooth = False
 
 Img_size = 96
 
-Temp_Audio_Path = 'data/temp/temp.wav'
-Temp_Video_Path = 'data/temp/temp.avi'
+Temp_Path = pathlib.Path(__file__).parent.resolve().joinpath('temp')
+if not Temp_Path.exists():
+    Temp_Path.mkdir()
+    
+
+Temp_Audio_Path = str(Temp_Path.joinpath('temp.wav'))
+Temp_Video_Path = str(Temp_Path.joinpath('temp.avi'))
 
 def get_smoothened_boxes(boxes, T):
     for i in range(len(boxes)):
@@ -84,7 +107,7 @@ def face_detect(images):
     pady1, pady2, padx1, padx2 = Pads
     for rect, image in zip(predictions, images):
         if rect is None:
-            cv2.imwrite('temp/faulty_frame.jpg', image) # check this frame where the face was not detected.
+            cv2.imwrite(Wav2Lip_Path + '/temp/faulty_frame.jpg', image) # check this frame where the face was not detected.
             raise ValueError('Face not detected! Ensure the video contains a face in all the frames.')
 
         y1 = max(0, rect[1] - pady1)
@@ -199,7 +222,7 @@ if not Input_Audio_Path.endswith('.wav'):
     
     Input_Audio_Stream = ffmpeg.input(Input_Audio_Path)
     Output_Audio_Stream = ffmpeg.output(Input_Audio_Stream, Temp_Audio_Path)
-    Output_Audio_Stream.run(overwrite_output=True)
+    Output_Audio_Stream.run(overwrite_output=True)#Overwrite)
 
     Input_Audio_Path = Temp_Audio_Path
 
