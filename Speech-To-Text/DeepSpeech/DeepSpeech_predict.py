@@ -6,9 +6,30 @@ import numpy as np
 import sys
 import json
 import librosa
+import pathlib
 
 from deepspeech import Model
 from timeit import default_timer as timer
+
+Common_File_Path = pathlib.Path(__file__).parent.parent.parent.parent
+# Checkpoint_Path: Name of saved checkpoint to load weights from
+Model_Path = str(Common_File_Path
+                   .joinpath('weights')
+                   .joinpath('DeepSpeech')
+                   .joinpath('de-DE')
+                   .joinpath('output_graph_de.pbmm'))
+
+Scorer_Path = str(Common_File_Path
+                   .joinpath('weights')
+                   .joinpath('DeepSpeech')
+                   .joinpath('de-DE')
+                   .joinpath('kenlm_de.scorer'))
+
+Audio_Path = str(Common_File_Path
+                   .joinpath('data')
+                   .joinpath('original')
+                   .joinpath('audios')
+                   .joinpath('Merkel_short.wav'))
 
 def words_from_candidate_transcript(metadata):
     word = ""
@@ -58,13 +79,13 @@ def main():
                         help='Language model weight (lm_alpha). If not specified, use default from the scorer package.')
     parser.add_argument('--lm_beta', type=float,
                         help='Word insertion bonus (lm_beta). If not specified, use default from the scorer package.')
-    parser.add_argument('--hot_words', type=str,
-                        help='Hot-words and their boosts.')
+    #parser.add_argument('--hot_words', type=str,
+    #                    help='Hot-words and their boosts.')
     args = parser.parse_args()
     
-    args.model = 'weights/deepspeech-0.9.3-models.pbmm'
-    args.scorer = 'weights/deepspeech-0.9.3-models.scorer'
-    args.audio = 'data/Biden_short.wav'#'8455-210777-0068.wav'
+    args.model = Model_Path#'weights/German/output_graph_de.pbmm'#'deepspeech-0.9.3-models.pbmm'
+    args.scorer = Scorer_Path#'weights/German/kenlm_de.scorer'#'deepspeech-0.9.3-models.scorer'
+    args.audio = Audio_Path#'../data/Merkel_short.wav'#'8455-210777-0068.wav'
 
     print('Loading model from file {}'.format(args.model), file=sys.stderr)
     model_load_start = timer()
@@ -91,11 +112,11 @@ def main():
             #pass
             ds.setScorerAlphaBeta(args.lm_alpha, args.lm_beta)
 
-    if args.hot_words:
-        print('Adding hot-words', file=sys.stderr)
-        for word_boost in args.hot_words.split(','):
-            word,boost = word_boost.split(':')
-            ds.addHotWord(word,float(boost))
+    #if args.hot_words:
+    #    print('Adding hot-words', file=sys.stderr)
+    #    for word_boost in args.hot_words.split(','):
+    #        word,boost = word_boost.split(':')
+    #        ds.addHotWord(word,float(boost))
     
     # Load audio as np.float32, range [-1 ... 1]
     audio, _ = librosa.core.load(args.audio)#, sr=desired_sample_rate)
