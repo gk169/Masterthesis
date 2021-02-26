@@ -3,9 +3,3 @@
 
 # Jupyter notebook checkpoint folders
 **/.ipynb_checkpoints
-
-# Data folders
-**/data
-
-# Trained weights folders
-**/weights
