@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 
 import speech_recognition as sr
+import pathlib
 
-AUDIO_FILE = 'data/TTS_output.wav'#'Biden_short.mp3'
+Common_File_Path = pathlib.Path(__file__).parent.parent.parent.parent
+# Checkpoint_Path: Name of saved checkpoint to load weights from
+Audio_Path = str(Common_File_Path
+                 .joinpath('data')
+                 .joinpath('original')
+                 .joinpath('audios')
+                 .joinpath('Merkel_short.wav'))
 
-LANGUAGE = 'en-US'#'de-DE'
+LANGUAGE = 'de-DE'#'en-US'
 
 # use the audio file as the audio source
 r = sr.Recognizer()
-with sr.AudioFile(AUDIO_FILE) as source:
+with sr.AudioFile(Audio_Path) as source:
     audio = r.record(source)  # read the entire audio file
 
 # recognize speech using Sphinx

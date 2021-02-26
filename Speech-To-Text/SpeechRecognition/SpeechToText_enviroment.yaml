@@ -5,6 +5,8 @@ channels:
  - pytorch
 dependencies:
  - python=3.6
+ 
+# conda activate SpeechRecognition
 
 # pip install -r requirements.txt
 
