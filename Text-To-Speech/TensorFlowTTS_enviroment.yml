@@ -5,6 +5,8 @@ channels:
 dependencies:
  - python=3.7
 
+# conda activate TensorFlowTTS
+
 # cd TensorFlowTTS
 # pip install .
 
