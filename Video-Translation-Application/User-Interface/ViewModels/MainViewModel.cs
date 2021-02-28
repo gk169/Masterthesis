@@ -70,6 +70,12 @@ namespace User_Interface
         {
             get { return _pages[_pageId]; }
         }
+
+        public string PageName
+        {
+            get { return _pages[_pageId].Name; }
+        }
+
         public void Next()
         {
             Progress += 1;

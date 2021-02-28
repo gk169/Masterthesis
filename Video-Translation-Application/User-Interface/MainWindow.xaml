@@ -10,28 +10,48 @@
         <local:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
     </Window.Resources>
     <DockPanel Margin="10">
+        <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1" BorderBrush="Black">
+            <Grid Margin="0 0 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           Text="{Binding Path=CurrentPage.DataContext.DisplayName}"
+                           FontSize="24"/>
+                <Image Grid.Column="1" Source="/Icons/HHN_Logo_Eng_small.jpg"/>
+            </Grid>
+        </Border>
+        
         <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Grid.Column="0"
+            <Button Grid.Row="0" Grid.Column="0"
                     Content="&lt; Back"
                     Command="{Binding Path=BackCommand}"
                     Visibility="{Binding Path=IsEnabled,
                                 RelativeSource={RelativeSource Self},
                                 Converter={StaticResource BoolVisibilityConverter}}"/>
-            <ProgressBar Margin="20 5" Grid.Column="1" Minimum="-1" Maximum="4" Value="{Binding Path=Progress, Mode=OneWay}"/>
-            <Button Margin="5" Grid.Column="2"
+            <ProgressBar Margin="20 0 20 0" Grid.Row="0" Grid.Column="1" Minimum="-1" Maximum="4" Value="{Binding Path=Progress, Mode=OneWay}"/>
+            <Button Grid.Row="0" Grid.Column="2"
                     Content="Next &gt;"
                     Command="{Binding Path=NextCommand}"
                     Visibility="{Binding Path=IsEnabled,
                                 RelativeSource={RelativeSource Self},
                                 Converter={StaticResource BoolVisibilityConverter}}"/>
+            <TextBlock Grid.Row="1" Margin="0 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Text="Copyright © 2021" FontSize="12"/>
         </Grid>
 
-        <Frame x:Name="Main" Margin="10" NavigationUIVisibility="Hidden" Content="{Binding Path=CurrentPage}"/>
+        <Frame Margin="0 20"  x:Name="Main" NavigationUIVisibility="Hidden" Content="{Binding Path=CurrentPage}"/>
     </DockPanel>
 </Window>
