@@ -1,0 +1,78 @@
+﻿<Page x:Class="User_Interface.TextToTextTranslation_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:User_Interface"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TextToTextTranslation_Page">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Margin="10" Background="Aqua" Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Text-To-Text-Translation" FontSize="18"/>
+        </Border>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="10" BorderBrush="Black" BorderThickness="0.5">
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Margin="10" Grid.Row="0">
+                        <Label FontSize="12" Content="Module"/>
+                        <ComboBox  x:Name="Module"
+                                   ItemsSource="{Binding SupportedModules}"
+                                   SelectedItem="{Binding Module}"
+                                   DisplayMemberPath="Name"/>
+                    </StackPanel>
+
+                    <Grid Margin="10" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <Label FontSize="12" Content="Source language"/>
+                            <ComboBox  x:Name="SourceLanguage"
+                                       ItemsSource="{Binding SupportedSourceLanguages}"
+                                       SelectedItem="{Binding SourceLanguage}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <Label FontSize="12" Content="Target language"/>
+                            <ComboBox  x:Name="TargetLanguage"
+                                       ItemsSource="{Binding SupportedTargetLanguages}"
+                                       SelectedItem="{Binding TargetLanguage}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBox Margin="10" Grid.Row="2" x:Name="SourceText"
+                             Text="{Binding SourceText}"
+                             FontSize="12"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Visible"/>
+                </Grid>
+            </Border>
+            <Button Margin="10" Grid.Column="1" x:Name="TranslateButton" Content="Translate" FontSize="12" Height="20"/>
+
+            <TextBox Margin="10" Grid.Column="2" x:Name="TargetText"
+                     Text="{Binding TargetText}"
+                     FontSize="12"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Visible"/>
+        </Grid>
+    </DockPanel>
+</Page>
