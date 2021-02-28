@@ -7,6 +7,8 @@ namespace User_Interface
         private readonly List<TextToSpeech> _supportedModules;
         private TextToSpeech _module;
 
+        public string DisplayName => "Step 3:\nText-To-Speech-Translation\n(Speech Synthesis)";
+
         public List<TextToSpeech> SupportedModules
         {
             get { return _supportedModules; }

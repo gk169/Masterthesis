@@ -7,6 +7,8 @@ namespace User_Interface
         private readonly List<SpeechToVideo> _supportedModules;
         private SpeechToVideo _module;
 
+        public string DisplayName => "Step 4:\nSpeech-To-Video\n(Lip Movement Synthesis)";
+
         public SpeechToVideoViewModel()
         {
             _supportedModules = new List<SpeechToVideo>()

@@ -7,6 +7,8 @@ namespace User_Interface
         private readonly List<SpeechToText> _supportedModules;
         private SpeechToText _module;
 
+        public string DisplayName => "Step 1:\nSpeech-To-Text-Translation\n(Speech Recognition)";
+
         public SpeechToTextViewModel()
         {
             _supportedModules = new List<SpeechToText>()

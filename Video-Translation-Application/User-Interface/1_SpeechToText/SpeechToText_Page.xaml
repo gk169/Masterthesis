@@ -7,53 +7,47 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SpeechToText_Page">
-    <DockPanel>
-        <Border DockPanel.Dock="Top" Margin="10"  Background="Aqua">
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Speech-To-Text" FontSize="18"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Margin="10"  BorderBrush="Black" BorderThickness="0.5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center" Grid.Row="0" Margin="10">
+                    <Label FontSize="12" Content="Speech-To-Text-Module"/>
+                    <ComboBox x:Name="Module" ItemsSource="{Binding SupportedModules}" SelectedItem="{Binding Module}" DisplayMemberPath="Name"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Grid.Row="1" Margin="10">
+                    <Label FontSize="12" Content="Audio language"/>
+                    <ComboBox  x:Name="Language" ItemsSource="{Binding Path=Module.SupportedLanguages}" SelectedItem="{Binding Path=Module.AudioLanguage}"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Center" Grid.Row="2" Margin="10">
+                    <Label FontSize="12" Content="Audio source"/>
+                    <ComboBox  x:Name="AudioSource"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+        <Button Margin="10" Grid.Column="1" x:Name="TranscribeButton" Content="Transcribe" FontSize="12" Height="20"/>
 
-            <Border Margin="10"  BorderBrush="Black" BorderThickness="1">
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel VerticalAlignment="Center" Grid.Row="0" Margin="10">
-                        <Label FontSize="12" Content="Module"/>
-                        <ComboBox x:Name="Module" ItemsSource="{Binding SupportedModules}" SelectedItem="{Binding Module}" DisplayMemberPath="Name"/>
-                    </StackPanel>
-
-                    <StackPanel VerticalAlignment="Center" Grid.Row="1" Margin="10">
-                        <Label FontSize="12" Content="Audio language"/>
-                        <ComboBox  x:Name="Language" ItemsSource="{Binding Path=Module.SupportedLanguages}" SelectedItem="{Binding Path=Module.AudioLanguage}"/>
-                    </StackPanel>
-
-                    <StackPanel VerticalAlignment="Center" Grid.Row="2" Margin="10">
-                        <Label FontSize="12" Content="Audio source"/>
-                        <ComboBox  x:Name="AudioSource"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-
-            <Button Margin="10" Grid.Column="1" x:Name="TranscribeButton" Content="Transcribe" FontSize="12" Height="20"/>
-
-            <TextBox Margin="10" Grid.Column="2" x:Name="TranscribedText"
-                         Text="Transcribed text ..."
-                         BorderThickness="1"
-                         BorderBrush="Black"
-                         FontSize="12"
-                         AcceptsReturn="True"
-                         TextWrapping="Wrap"
-                         VerticalScrollBarVisibility="Visible"/>
-        </Grid>
-    </DockPanel>
+        <TextBox Margin="10" Grid.Column="2" x:Name="TranscribedText"
+                        Text="Transcribed text ..."
+                        BorderThickness="1"
+                        BorderBrush="Black"
+                        FontSize="12"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Visible"/>
+    </Grid>
 </Page>

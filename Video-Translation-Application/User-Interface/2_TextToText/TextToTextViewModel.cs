@@ -11,6 +11,8 @@ namespace User_Interface
         private readonly List<TextToText> _supportedModules;
         private TextToText _module;
 
+        public string DisplayName => "Step 2:\nText-To-Text-Translation";
+
         public TextToTextViewModel()
         {
             _supportedModules = new List<TextToText>()
