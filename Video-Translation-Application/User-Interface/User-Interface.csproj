@@ -7,4 +7,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Icons\HHN_Logo_Eng.jpg" />
+    <None Remove="Icons\HHN_Logo_Eng_small.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\HHN_Logo_Eng_small.jpg" />
+  </ItemGroup>
+
 </Project>
