@@ -42,7 +42,9 @@
                     Visibility="{Binding Path=IsEnabled,
                                 RelativeSource={RelativeSource Self},
                                 Converter={StaticResource BoolVisibilityConverter}}"/>
-            <ProgressBar Margin="20 0 20 0" Grid.Row="0" Grid.Column="1" Minimum="-1" Maximum="4" Value="{Binding Path=Progress, Mode=OneWay}"/>
+            <ProgressBar Margin="20 0 20 0" Grid.Row="0" Grid.Column="1"
+                         Minimum="-1" Maximum="4"
+                         Value="{Binding Path=Progress, Mode=OneWay}" Foreground="#0056a1"/>
             <Button Grid.Row="0" Grid.Column="2"
                     Content="Next &gt;"
                     Command="{Binding Path=NextCommand}"
