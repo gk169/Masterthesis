@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="VideoTranslationTool.UserControls.AudioPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common;component/UserControls/HhnColoredSlider.xaml"/>
+                <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary> 
+        
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="0.5">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ContentControl Grid.Row="0" Content="{StaticResource Audio}" Height="Auto"/>
+            <Grid Grid.Row="1" Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" x:Name="TimePlayedTextbox"/>
+                <Slider x:Name="Slider" Grid.Column="1" Margin="5 0"
+                        Template="{DynamicResource SliderHorizontal}"
+                        IsSelectionRangeEnabled="True"
+                        SelectionStart="0"
+                        Thumb.DragStarted="Slider_DragStarted"
+                        Thumb.DragCompleted="Slider_DragCompleted"
+                        SelectionEnd="{Binding Value, RelativeSource={RelativeSource Self}}"
+                        Minimum="0"/>
+                <TextBlock Grid.Column="2" x:Name="TimeTotalTextbox"/>
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="PlayButton"
+                        ContentTemplate="{StaticResource Play}"
+                        Click="Play"
+                        Height="20"/>
+                <Button x:Name="PauseButton"
+                        ContentTemplate="{StaticResource Pause}"
+                        Click="Pause"
+                        Height="20" Margin="10,0"/>
+                <Button x:Name="StopButton"
+                        ContentTemplate="{StaticResource Stop}"
+                        Click="Stop"
+                        Height="20"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
