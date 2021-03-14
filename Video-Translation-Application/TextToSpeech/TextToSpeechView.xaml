@@ -1,0 +1,129 @@
+﻿<Page x:Class="VideoTranslationTool.TextToSpeechModule.TextToSpeechView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:uc="clr-namespace:VideoTranslationTool.UserControls;assembly=Common"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TextToSpeechView">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0" BorderBrush="Black">
+            <GroupBox.Header>
+                <TextBlock FontWeight="Bold" Text="Settings and Inputs"/>
+            </GroupBox.Header>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <Label>
+                        <StackPanel Orientation="Horizontal">
+                            <AccessText Text="Text-To-Speech-Module"/>
+                            <ContentControl Margin="5 0 0 0"
+                                            ContentTemplate="{StaticResource Help}"
+                                            Height="16"
+                                            ToolTip="Select module used for speech synthetization"/>
+                        </StackPanel>
+                    </Label>
+                    <ComboBox ItemsSource="{Binding SupportedModules}"
+                              SelectedItem="{Binding Module}"
+                              DisplayMemberPath="Name"/>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <Label>
+                            <StackPanel Orientation="Horizontal">
+                                <AccessText Text="Text language"/>
+                                <ContentControl Margin="5 0 0 0"
+                                            ContentTemplate="{StaticResource Help}"
+                                            Height="16"
+                                            ToolTip="Select language of the text"/>
+                            </StackPanel>
+                        </Label>
+                        <ComboBox ItemsSource="{Binding SupportedLanguages}" SelectedItem="{Binding Language}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <Label>
+                            <StackPanel Orientation="Horizontal">
+                                <AccessText Text="Audio voice"/>
+                                <ContentControl Margin="5 0 0 0"
+                                            ContentTemplate="{StaticResource Help}"
+                                            Height="16"
+                                            ToolTip="Select voiceto be used to synthesize the text"/>
+                            </StackPanel>
+                        </Label>
+                        <ComboBox ItemsSource="{Binding Path=SupportedVoices}"
+                                  SelectedItem="{Binding Path=Voice}"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <AccessText Text="Text to be synthesized"/>
+                            <ContentControl Margin="5 0 0 0"
+                                            ContentTemplate="{StaticResource Help}"
+                                            Height="16"
+                                            ToolTip="Enter text to be synthesized"/>
+                        </StackPanel>
+                    </Label>
+                    <TextBox Grid.Row="1"
+                             Text="{Binding Text}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Visible"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+        <Button Grid.Column="1" Margin="10" VerticalAlignment="Center"
+                Content="Synthesize" Command="{Binding SynthesizeCommand}"/>
+
+        <GroupBox Grid.Column="2" BorderBrush="Black">
+            <GroupBox.Header>
+                <TextBlock FontWeight="Bold" Text="Output"/>
+            </GroupBox.Header>
+
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <uc:AudioPlayer Grid.Row="0" FilePath="{Binding AudioPath}"/>
+                <Button Grid.Row="1" Margin="0 10 0 0" Width="80" Content="Export Audio" Command="{Binding ExportCommand}"/>
+            </Grid>
+            
+        </GroupBox>
+
+    </Grid>
+</Page>
