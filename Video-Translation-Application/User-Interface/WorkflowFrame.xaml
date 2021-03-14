@@ -1,0 +1,81 @@
+﻿<Page x:Class="VideoTranslationTool.WorkflowFrame"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VideoTranslationTool.Converters;assembly=Common"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WorkflowFrame">
+    <Page.Resources>
+        <local:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+        <local:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        <local:BoolToThicknessConverter x:Key="BoolToThicknessConverter"/>
+    </Page.Resources>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Left" Width="110">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="1" Margin="0 5"
+                    BorderBrush="{Binding IsSTTActive, Converter={StaticResource BoolToColorConverter}}"
+                    BorderThickness="{Binding IsSTTActive, Converter={StaticResource BoolToThicknessConverter}}"
+                    Command="{Binding SelectSTTCommand}">
+                <TextBlock Text="Speech-To-Text-Transcription" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button Grid.Row="3" Margin="0 5"
+                    BorderBrush="{Binding IsTTTActive, Converter={StaticResource BoolToColorConverter}}"
+                    BorderThickness="{Binding IsTTTActive, Converter={StaticResource BoolToThicknessConverter}}"
+                    Command="{Binding SelectTTTCommand}">
+                <TextBlock Text="Text-To-Text-Translation" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button Grid.Row="5" Margin="0 5"
+                    BorderBrush="{Binding IsTTSActive, Converter={StaticResource BoolToColorConverter}}"
+                    BorderThickness="{Binding IsTTSActive, Converter={StaticResource BoolToThicknessConverter}}"
+                    Command="{Binding SelectTTSCommand}">
+                <TextBlock Text="Text-To-Speech-Synthetization" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button Grid.Row="7" Margin="0 5"
+                    BorderBrush="{Binding IsSTVActive, Converter={StaticResource BoolToColorConverter}}"
+                    BorderThickness="{Binding IsSTVActive, Converter={StaticResource BoolToThicknessConverter}}"
+                    Command="{Binding SelectSTVCommand}">
+                <TextBlock Text="Speech-To-Video-Generation" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button> 
+        </Grid>
+        
+        <Grid DockPanel.Dock="Bottom" Margin="50 0 10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="&lt; Back"
+                    Command="{Binding Path=BackCommand}"
+                    Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolVisibilityConverter}}"/>
+            <!--<ProgressBar Grid.Column="2"
+                         Minimum="0" Maximum="4"
+                         Value="{Binding Path=Progress, Mode=OneWay}" Foreground="#0056a1"/>-->
+            <Button Grid.Column="2" Content="Next &gt;"
+                    Command="{Binding Path=NextCommand}"
+                    Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolVisibilityConverter}}"/>
+            <Button Grid.Column="4" Content="Skip x"
+                    Command="{Binding Path=SkipCommand}"
+                    Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolVisibilityConverter}}"/>
+        </Grid>
+
+        <Frame Margin="50 10 10 10 " Content="{Binding CurrentPage}"/>
+    </DockPanel>
+</Page>

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace User_Interface
+namespace VideoTranslationTool
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

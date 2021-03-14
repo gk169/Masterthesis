@@ -1,96 +1,85 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
+using VideoTranslationTool.SpeechToTextModule;
+using VideoTranslationTool.SpeechToVideoModule;
+using VideoTranslationTool.TextToSpeechModule;
+using VideoTranslationTool.TextToTextModule;
 
-namespace User_Interface
+namespace VideoTranslationTool
 {
 
     public class MainViewModel : ViewModel
     {
-        private ICommand _backCommand;
-        private ICommand _nextCommand;
-
-        public ICommand NextCommand
-        {
-            get
-            {
-                if (_nextCommand == null) _nextCommand = new RelayCommand(param => this.Next(), param => this.CanNext());
-                return _nextCommand;
-            }
-        }
-        public ICommand BackCommand
-        {
-            get
-            {
-                if (_backCommand == null) _backCommand = new RelayCommand(param => this.Back(), param => this.CanBack());
-                return _backCommand;
-            }
-        }
-
-        private sbyte _pageId = 0;
-
         public MainViewModel()
         {
-            Page SpeechToTextPage = new SpeechToText_Page();
-            Page TextToTextPage = new TextToTextTranslation_Page();
-            Page TextToSpeechPage = new TextToSpeech_Page();
-            Page SpeechToVideoPage = new SpeechToVideo_Page();
-
-            SpeechToTextPage.DataContext = new SpeechToTextViewModel();
-            TextToTextPage.DataContext = new TextToTextViewModel();
-            TextToSpeechPage.DataContext = new TextToSpeechViewModel();
-            SpeechToVideoPage.DataContext = new SpeechToVideoViewModel();
-
-            _pages = new Page[]
+            Page startPage = new Start_Page();
+            Page speechToTextView = new SpeechToTextView();
+            Page textToTextView = new TextToTextView();
+            Page textToSpeechView = new TextToSpeechView
             {
-                SpeechToTextPage, TextToTextPage, TextToSpeechPage, SpeechToVideoPage,
+                DataContext = new TextToSpeechViewModel()
+            };
+            Page speechToVideoView = new SpeechToVideoView
+            {
+                DataContext = new SpeechToVideoViewModel()
+            };
+
+            _pageDictionary = new Dictionary<int, Page>{
+                {(int)PagesEnum.Start, startPage},
+                {(int)PagesEnum.SpeechToText, speechToTextView},
+                {(int)PagesEnum.TextToText, textToTextView},
+                {(int)PagesEnum.TextToSpeech, textToSpeechView},
+                {(int)PagesEnum.SpeechToVideo, speechToVideoView}
             };
         }
 
-        private readonly Page[] _pages;
+        private readonly Dictionary<int, Page> _pageDictionary;
 
-        public sbyte Progress
+        private enum StatesEnum
         {
-            get { return _pageId; }
-            private set
+            Started=0,
+            Transcribed=1,
+            Translated=2,
+            Synthesized=3,
+            Generated=4
+        };
+
+        private enum PagesEnum
+        {
+            Start=0,
+            SpeechToText=1,
+            TextToText=2,
+            TextToSpeech=3,
+            SpeechToVideo=4,
+        };
+
+        private StatesEnum _currentState = StatesEnum.Started;
+        private PagesEnum _currentPageNumber = PagesEnum.Start;
+
+        public int Progress
+        {
+            get { return (int)_currentState; }
+            set
             {
-                _pageId = value;
+                _currentState = (StatesEnum)value;
                 OnPropertyChanged(nameof(Progress));
+            }
+        }
+
+        public int CurrentPageNumber
+        {
+            get { return (int)_currentPageNumber; }
+            set
+            {
+                _currentPageNumber = (PagesEnum)value;
                 OnPropertyChanged(nameof(CurrentPage));
             }
         }
 
         public Page CurrentPage
         {
-            get { return _pages[_pageId]; }
-        }
-
-        public void Next()
-        {
-            Progress += 1;
-        }
-
-        public void Back()
-        {
-            Progress -= 1;
-        }
-
-        public bool CanBack()
-        {
-            if (Progress == 0) return false;
-            else return true;
-        }
-
-        public bool CanNext()
-        {
-            if (Progress >= (_pages.Length - 1)) return false;
-            else return true;
+            get { return _pageDictionary[(int)CurrentPageNumber]; }
         }
     }
 }

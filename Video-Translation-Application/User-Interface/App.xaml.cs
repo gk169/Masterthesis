@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace User_Interface
+namespace VideoTranslationTool
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -16,8 +10,12 @@ namespace User_Interface
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow window = new MainWindow();
-            window.DataContext = new MainViewModel();
+            MainWindow window = new()
+            {
+                //DataContext = new MainViewModel()
+            };
+            //window.Main.Content = new Start_Page();
+            window.Main.Content = new WorkflowFrame();
             window.Show();
         }
     }
