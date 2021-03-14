@@ -1,0 +1,283 @@
+https://cloud.google.com/speech-to-text/docs/languages
+Name 	BCP-47 	Model 	Automatic punctuation 	Diarization 	Boost 	Word-level confidence 	Profanity filter
+Afrikaans (South Africa) 	af-ZA 	Command and search 			✔ 		✔
+Afrikaans (South Africa) 	af-ZA 	Default 			✔ 		✔
+Albanian (Albania) 	sq-AL 	Command and search 					✔
+Albanian (Albania) 	sq-AL 	Default 					✔
+Amharic (Ethiopia) 	am-ET 	Command and search 					✔
+Amharic (Ethiopia) 	am-ET 	Default 					✔
+Arabic (Algeria) 	ar-DZ 	Command and search 					✔
+Arabic (Algeria) 	ar-DZ 	Default 					✔
+Arabic (Bahrain) 	ar-BH 	Command and search 			✔ 		✔
+Arabic (Bahrain) 	ar-BH 	Default 			✔ 		✔
+Arabic (Egypt) 	ar-EG 	Command and search 			✔ 		✔
+Arabic (Egypt) 	ar-EG 	Default 			✔ 		✔
+Arabic (Iraq) 	ar-IQ 	Command and search 			✔ 		✔
+Arabic (Iraq) 	ar-IQ 	Default 			✔ 		✔
+Arabic (Israel) 	ar-IL 	Command and search 			✔ 		✔
+Arabic (Israel) 	ar-IL 	Default 			✔ 		✔
+Arabic (Jordan) 	ar-JO 	Command and search 			✔ 		✔
+Arabic (Jordan) 	ar-JO 	Default 			✔ 		✔
+Arabic (Kuwait) 	ar-KW 	Command and search 			✔ 		✔
+Arabic (Kuwait) 	ar-KW 	Default 			✔ 		✔
+Arabic (Lebanon) 	ar-LB 	Command and search 			✔ 		✔
+Arabic (Lebanon) 	ar-LB 	Default 			✔ 		✔
+Arabic (Morocco) 	ar-MA 	Command and search 					✔
+Arabic (Morocco) 	ar-MA 	Default 					✔
+Arabic (Oman) 	ar-OM 	Command and search 			✔ 		✔
+Arabic (Oman) 	ar-OM 	Default 			✔ 		✔
+Arabic (Qatar) 	ar-QA 	Command and search 			✔ 		✔
+Arabic (Qatar) 	ar-QA 	Default 			✔ 		✔
+Arabic (Saudi Arabia) 	ar-SA 	Command and search 			✔ 		✔
+Arabic (Saudi Arabia) 	ar-SA 	Default 			✔ 		✔
+Arabic (State of Palestine) 	ar-PS 	Command and search 			✔ 		✔
+Arabic (State of Palestine) 	ar-PS 	Default 			✔ 		✔
+Arabic (Tunisia) 	ar-TN 	Command and search 					✔
+Arabic (Tunisia) 	ar-TN 	Default 					✔
+Arabic (United Arab Emirates) 	ar-AE 	Command and search 			✔ 		✔
+Arabic (United Arab Emirates) 	ar-AE 	Default 			✔ 		✔
+Arabic (Yemen) 	ar-YE 	Command and search 					✔
+Arabic (Yemen) 	ar-YE 	Default 					✔
+Armenian (Armenia) 	hy-AM 	Command and search 					✔
+Armenian (Armenia) 	hy-AM 	Default 					✔
+Azerbaijani (Azerbaijan) 	az-AZ 	Command and search 					✔
+Azerbaijani (Azerbaijan) 	az-AZ 	Default 					✔
+Basque (Spain) 	eu-ES 	Command and search 					✔
+Basque (Spain) 	eu-ES 	Default 					✔
+Bengali (Bangladesh) 	bn-BD 	Command and search 			✔ 		✔
+Bengali (Bangladesh) 	bn-BD 	Default 			✔ 		✔
+Bengali (India) 	bn-IN 	Command and search 					✔
+Bengali (India) 	bn-IN 	Default 					✔
+Bosnian (Bosnia and Herzegovina) 	bs-BA 	Command and search 					✔
+Bosnian (Bosnia and Herzegovina) 	bs-BA 	Default 					✔
+Bulgarian (Bulgaria) 	bg-BG 	Command and search 					✔
+Bulgarian (Bulgaria) 	bg-BG 	Default 					✔
+Burmese (Myanmar) 	my-MM 	Command and search 					✔
+Burmese (Myanmar) 	my-MM 	Default 					✔
+Catalan (Spain) 	ca-ES 	Command and search 					✔
+Catalan (Spain) 	ca-ES 	Default 					✔
+Chinese, Cantonese (Traditional Hong Kong) 	yue-Hant-HK 	Command and search 			✔ 		✔
+Chinese, Cantonese (Traditional Hong Kong) 	yue-Hant-HK 	Default 			✔ 		✔
+Chinese, Mandarin (Simplified, China) 	zh (cmn-Hans-CN) 	Command and search 	✔ 	✔ 	✔ 		✔
+Chinese, Mandarin (Simplified, China) 	zh (cmn-Hans-CN) 	Default 	✔ 	✔ 	✔ 		✔
+Chinese, Mandarin (Traditional, Taiwan) 	zh-TW (cmn-Hant-TW) 	Command and search 	✔ 		✔ 		✔
+Chinese, Mandarin (Traditional, Taiwan) 	zh-TW (cmn-Hant-TW) 	Default 	✔ 		✔ 		✔
+Croatian (Croatia) 	hr-HR 	Command and search 					✔
+Croatian (Croatia) 	hr-HR 	Default 					✔
+Czech (Czech Republic) 	cs-CZ 	Command and search 	✔ 		✔ 		✔
+Czech (Czech Republic) 	cs-CZ 	Default 	✔ 		✔ 		✔
+Danish (Denmark) 	da-DK 	Command and search 	✔ 		✔ 		✔
+Danish (Denmark) 	da-DK 	Default 	✔ 		✔ 		✔
+Dutch (Belgium) 	nl-BE 	Command and search 					✔
+Dutch (Belgium) 	nl-BE 	Default 					✔
+Dutch (Netherlands) 	nl-NL 	Command and search 			✔ 		✔
+Dutch (Netherlands) 	nl-NL 	Default 			✔ 		✔
+English (Australia) 	en-AU 	Command and search 	✔ 		✔ 		✔
+English (Australia) 	en-AU 	Default 	✔ 		✔ 		✔
+English (Canada) 	en-CA 	Command and search 					✔
+English (Canada) 	en-CA 	Default 					✔
+English (Ghana) 	en-GH 	Command and search 			✔ 		✔
+English (Ghana) 	en-GH 	Default 			✔ 		✔
+English (Hong Kong) 	en-HK 	Command and search 					✔
+English (Hong Kong) 	en-HK 	Default 					✔
+English (India) 	en-IN 	Command and search 	✔ 	✔ 	✔ 		✔
+English (India) 	en-IN 	Default 	✔ 	✔ 	✔ 		✔
+English (Ireland) 	en-IE 	Command and search 					✔
+English (Ireland) 	en-IE 	Default 					✔
+English (Kenya) 	en-KE 	Command and search 			✔ 		✔
+English (Kenya) 	en-KE 	Default 			✔ 		✔
+English (New Zealand) 	en-NZ 	Command and search 					✔
+English (New Zealand) 	en-NZ 	Default 					✔
+English (Nigeria) 	en-NG 	Command and search 			✔ 		✔
+English (Nigeria) 	en-NG 	Default 			✔ 		✔
+English (Pakistan) 	en-PK 	Command and search 					✔
+English (Pakistan) 	en-PK 	Default 					✔
+English (Philippines) 	en-PH 	Command and search 			✔ 		✔
+English (Philippines) 	en-PH 	Default 			✔ 		✔
+English (Singapore) 	en-SG 	Command and search 	✔ 	✔ 	✔ 	✔ 	✔
+English (Singapore) 	en-SG 	Default 	✔ 	✔ 	✔ 	✔ 	✔
+English (South Africa) 	en-ZA 	Command and search 			✔ 		✔
+English (South Africa) 	en-ZA 	Default 			✔ 		✔
+English (Tanzania) 	en-TZ 	Command and search 			✔ 		✔
+English (Tanzania) 	en-TZ 	Default 			✔ 		✔
+English (United Kingdom) 	en-GB 	Command and search 	✔ 	✔ 	✔ 		✔
+English (United Kingdom) 	en-GB 	Default 	✔ 	✔ 	✔ 		✔
+English (United Kingdom) 	en-GB 	Enhanced phone call 	✔ 	✔ 	✔ 		✔
+English (United Kingdom) 	en-GB 	Phone call 	✔ 	✔ 	✔ 		✔
+English (United States) 	en-US 	Command and search 	✔ 	✔ 	✔ 	✔ 	✔
+English (United States) 	en-US 	Default 	✔ 	✔ 	✔ 	✔ 	✔
+English (United States) 	en-US 	Enhanced phone call 	✔ 	✔ 	✔ 	✔ 	✔
+English (United States) 	en-US 	Enhanced video 	✔ 	✔ 	✔ 	✔ 	✔
+English (United States) 	en-US 	Phone call 	✔ 	✔ 	✔ 	✔ 	✔
+Estonian (Estonia) 	et-EE 	Command and search 					✔
+Estonian (Estonia) 	et-EE 	Default 					✔
+Filipino (Philippines) 	fil-PH 	Command and search 			✔ 		✔
+Filipino (Philippines) 	fil-PH 	Default 			✔ 		✔
+Finnish (Finland) 	fi-FI 	Command and search 	✔ 		✔ 		✔
+Finnish (Finland) 	fi-FI 	Default 	✔ 		✔ 		✔
+French (Belgium) 	fr-BE 	Command and search 					✔
+French (Belgium) 	fr-BE 	Default 					✔
+French (Canada) 	fr-CA 	Command and search 			✔ 		✔
+French (Canada) 	fr-CA 	Default 			✔ 		✔
+French (France) 	fr-FR 	Command and search 	✔ 	✔ 	✔ 		✔
+French (France) 	fr-FR 	Default 	✔ 	✔ 	✔ 		✔
+French (Switzerland) 	fr-CH 	Command and search 					✔
+French (Switzerland) 	fr-CH 	Default 					✔
+Galician (Spain) 	gl-ES 	Command and search 					✔
+Galician (Spain) 	gl-ES 	Default 					✔
+Georgian (Georgia) 	ka-GE 	Command and search 					✔
+Georgian (Georgia) 	ka-GE 	Default 					✔
+German (Austria) 	de-AT 	Command and search 					✔
+German (Austria) 	de-AT 	Default 					✔
+German (Germany) 	de-DE 	Command and search 	✔ 	✔ 	✔ 		✔
+German (Germany) 	de-DE 	Default 	✔ 	✔ 	✔ 		✔
+German (Switzerland) 	de-CH 	Command and search 					✔
+German (Switzerland) 	de-CH 	Default 					✔
+Greek (Greece) 	el-GR 	Command and search 					✔
+Greek (Greece) 	el-GR 	Default 					✔
+Gujarati (India) 	gu-IN 	Command and search 			✔ 		✔
+Gujarati (India) 	gu-IN 	Default 			✔ 		✔
+Hebrew (Israel) 	iw-IL 	Command and search 			✔ 		✔
+Hebrew (Israel) 	iw-IL 	Default 			✔ 		✔
+Hindi (India) 	hi-IN 	Command and search 			✔ 		✔
+Hindi (India) 	hi-IN 	Default 			✔ 		✔
+Hungarian (Hungary) 	hu-HU 	Command and search 					✔
+Hungarian (Hungary) 	hu-HU 	Default 					✔
+Icelandic (Iceland) 	is-IS 	Command and search 					✔
+Icelandic (Iceland) 	is-IS 	Default 					✔
+Indonesian (Indonesia) 	id-ID 	Command and search 	✔ 		✔ 		✔
+Indonesian (Indonesia) 	id-ID 	Default 	✔ 		✔ 		✔
+Italian (Italy) 	it-IT 	Command and search 	✔ 	✔ 	✔ 		✔
+Italian (Italy) 	it-IT 	Default 	✔ 	✔ 	✔ 		✔
+Italian (Switzerland) 	it-CH 	Command and search 					✔
+Italian (Switzerland) 	it-CH 	Default 					✔
+Japanese (Japan) 	ja-JP 	Command and search 	✔ 	✔ 	✔ 		✔
+Japanese (Japan) 	ja-JP 	Default 	✔ 	✔ 	✔ 		✔
+Javanese (Indonesia) 	jv-ID 	Command and search 					✔
+Javanese (Indonesia) 	jv-ID 	Default 					✔
+Kannada (India) 	kn-IN 	Command and search 			✔ 		✔
+Kannada (India) 	kn-IN 	Default 			✔ 		✔
+Khmer (Cambodia) 	km-KH 	Command and search 					✔
+Khmer (Cambodia) 	km-KH 	Default 					✔
+Korean (South Korea) 	ko-KR 	Command and search 	✔ 		✔ 		✔
+Korean (South Korea) 	ko-KR 	Default 	✔ 		✔ 		✔
+Lao (Laos) 	lo-LA 	Command and search 					✔
+Lao (Laos) 	lo-LA 	Default 					✔
+Latvian (Latvia) 	lv-LV 	Command and search 					✔
+Latvian (Latvia) 	lv-LV 	Default 					✔
+Lithuanian (Lithuania) 	lt-LT 	Command and search 					✔
+Lithuanian (Lithuania) 	lt-LT 	Default 					✔
+Macedonian (North Macedonia) 	mk-MK 	Command and search 					✔
+Macedonian (North Macedonia) 	mk-MK 	Default 					✔
+Malay (Malaysia) 	ms-MY 	Command and search 			✔ 		✔
+Malay (Malaysia) 	ms-MY 	Default 			✔ 		✔
+Malayalam (India) 	ml-IN 	Command and search 			✔ 		✔
+Malayalam (India) 	ml-IN 	Default 			✔ 		✔
+Marathi (India) 	mr-IN 	Command and search 			✔ 		✔
+Marathi (India) 	mr-IN 	Default 			✔ 		✔
+Mongolian (Mongolia) 	mn-MN 	Command and search 					✔
+Mongolian (Mongolia) 	mn-MN 	Default 					✔
+Nepali (Nepal) 	ne-NP 	Command and search 					✔
+Nepali (Nepal) 	ne-NP 	Default 					✔
+Norwegian Bokmål (Norway) 	no-NO 	Command and search 			✔ 		✔
+Norwegian Bokmål (Norway) 	no-NO 	Default 			✔ 		✔
+Persian (Iran) 	fa-IR 	Command and search 			✔ 		✔
+Persian (Iran) 	fa-IR 	Default 			✔ 		✔
+Polish (Poland) 	pl-PL 	Command and search 			✔ 		✔
+Polish (Poland) 	pl-PL 	Default 			✔ 		✔
+Portuguese (Brazil) 	pt-BR 	Command and search 		✔ 	✔ 		✔
+Portuguese (Brazil) 	pt-BR 	Default 		✔ 	✔ 		✔
+Portuguese (Portugal) 	pt-PT 	Command and search 			✔ 		✔
+Portuguese (Portugal) 	pt-PT 	Default 			✔ 		✔
+Punjabi (Gurmukhi India) 	pa-Guru-IN 	Command and search 					✔
+Punjabi (Gurmukhi India) 	pa-Guru-IN 	Default 					✔
+Romanian (Romania) 	ro-RO 	Command and search 					✔
+Romanian (Romania) 	ro-RO 	Default 					✔
+Russian (Russia) 	ru-RU 	Command and search 		✔ 	✔ 		✔
+Russian (Russia) 	ru-RU 	Default 		✔ 	✔ 		✔
+Russian (Russia) 	ru-RU 	Enhanced phone call 		✔ 	✔ 		✔
+Russian (Russia) 	ru-RU 	Phone call 		✔ 	✔ 		✔
+Serbian (Serbia) 	sr-RS 	Command and search 			✔ 		✔
+Serbian (Serbia) 	sr-RS 	Default 			✔ 		✔
+Sinhala (Sri Lanka) 	si-LK 	Command and search 					✔
+Sinhala (Sri Lanka) 	si-LK 	Default 					✔
+Slovak (Slovakia) 	sk-SK 	Command and search 					✔
+Slovak (Slovakia) 	sk-SK 	Default 					✔
+Slovenian (Slovenia) 	sl-SI 	Command and search 					✔
+Slovenian (Slovenia) 	sl-SI 	Default 					✔
+Spanish (Argentina) 	es-AR 	Command and search 					✔
+Spanish (Argentina) 	es-AR 	Default 					✔
+Spanish (Bolivia) 	es-BO 	Command and search 					✔
+Spanish (Bolivia) 	es-BO 	Default 					✔
+Spanish (Chile) 	es-CL 	Command and search 					✔
+Spanish (Chile) 	es-CL 	Default 					✔
+Spanish (Colombia) 	es-CO 	Command and search 					✔
+Spanish (Colombia) 	es-CO 	Default 					✔
+Spanish (Costa Rica) 	es-CR 	Command and search 					✔
+Spanish (Costa Rica) 	es-CR 	Default 					✔
+Spanish (Dominican Republic) 	es-DO 	Command and search 					✔
+Spanish (Dominican Republic) 	es-DO 	Default 					✔
+Spanish (Ecuador) 	es-EC 	Command and search 					✔
+Spanish (Ecuador) 	es-EC 	Default 					✔
+Spanish (El Salvador) 	es-SV 	Command and search 					✔
+Spanish (El Salvador) 	es-SV 	Default 					✔
+Spanish (Guatemala) 	es-GT 	Command and search 					✔
+Spanish (Guatemala) 	es-GT 	Default 					✔
+Spanish (Honduras) 	es-HN 	Command and search 					✔
+Spanish (Honduras) 	es-HN 	Default 					✔
+Spanish (Mexico) 	es-MX 	Command and search 					✔
+Spanish (Mexico) 	es-MX 	Default 					✔
+Spanish (Nicaragua) 	es-NI 	Command and search 					✔
+Spanish (Nicaragua) 	es-NI 	Default 					✔
+Spanish (Panama) 	es-PA 	Command and search 					✔
+Spanish (Panama) 	es-PA 	Default 					✔
+Spanish (Paraguay) 	es-PY 	Command and search 					✔
+Spanish (Paraguay) 	es-PY 	Default 					✔
+Spanish (Peru) 	es-PE 	Command and search 					✔
+Spanish (Peru) 	es-PE 	Default 					✔
+Spanish (Puerto Rico) 	es-PR 	Command and search 					✔
+Spanish (Puerto Rico) 	es-PR 	Default 					✔
+Spanish (Spain) 	es-ES 	Command and search 		✔ 	✔ 		✔
+Spanish (Spain) 	es-ES 	Default 		✔ 	✔ 		✔
+Spanish (United States) 	es-US 	Command and search 	✔ 		✔ 		✔
+Spanish (United States) 	es-US 	Default 	✔ 		✔ 		✔
+Spanish (United States) 	es-US 	Enhanced phone call 	✔ 		✔ 		✔
+Spanish (United States) 	es-US 	Phone call 	✔ 		✔ 		✔
+Spanish (Uruguay) 	es-UY 	Command and search 					✔
+Spanish (Uruguay) 	es-UY 	Default 					✔
+Spanish (Venezuela) 	es-VE 	Command and search 					✔
+Spanish (Venezuela) 	es-VE 	Default 					✔
+Sundanese (Indonesia) 	su-ID 	Command and search 					✔
+Sundanese (Indonesia) 	su-ID 	Default 					✔
+Swahili (Kenya) 	sw-KE 	Command and search 					✔
+Swahili (Kenya) 	sw-KE 	Default 					✔
+Swahili (Tanzania) 	sw-TZ 	Command and search 					✔
+Swahili (Tanzania) 	sw-TZ 	Default 					✔
+Swedish (Sweden) 	sv-SE 	Command and search 	✔ 		✔ 		✔
+Swedish (Sweden) 	sv-SE 	Default 	✔ 		✔ 		✔
+Tamil (India) 	ta-IN 	Command and search 			✔ 		✔
+Tamil (India) 	ta-IN 	Default 			✔ 		✔
+Tamil (Malaysia) 	ta-MY 	Command and search 					✔
+Tamil (Malaysia) 	ta-MY 	Default 					✔
+Tamil (Singapore) 	ta-SG 	Command and search 					✔
+Tamil (Singapore) 	ta-SG 	Default 					✔
+Tamil (Sri Lanka) 	ta-LK 	Command and search 					✔
+Tamil (Sri Lanka) 	ta-LK 	Default 					✔
+Telugu (India) 	te-IN 	Command and search 			✔ 		✔
+Telugu (India) 	te-IN 	Default 			✔ 		✔
+Thai (Thailand) 	th-TH 	Command and search 			✔ 		✔
+Thai (Thailand) 	th-TH 	Default 			✔ 		✔
+Turkish (Turkey) 	tr-TR 	Command and search 	✔ 		✔ 		✔
+Turkish (Turkey) 	tr-TR 	Default 	✔ 		✔ 		✔
+Ukrainian (Ukraine) 	uk-UA 	Command and search 			✔ 		✔
+Ukrainian (Ukraine) 	uk-UA 	Default 			✔ 		✔
+Urdu (India) 	ur-IN 	Command and search 					✔
+Urdu (India) 	ur-IN 	Default 					✔
+Urdu (Pakistan) 	ur-PK 	Command and search 			✔ 		✔
+Urdu (Pakistan) 	ur-PK 	Default 			✔ 		✔
+Uzbek (Uzbekistan) 	uz-UZ 	Command and search 					✔
+Uzbek (Uzbekistan) 	uz-UZ 	Default 					✔
+Vietnamese (Vietnam) 	vi-VN 	Command and search 			✔ 		✔
+Vietnamese (Vietnam) 	vi-VN 	Default 			✔ 		✔
+Zulu (South Africa) 	zu-ZA 	Command and search 			✔ 		✔
+Zulu (South Africa) 	zu-ZA 	Default 			✔ 		✔

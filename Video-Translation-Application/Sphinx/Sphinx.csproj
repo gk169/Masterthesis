@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>VideoTranslationTool.SpeechToTextModule</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Sphinx_SupportedLanguages.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sphinx_SupportedLanguages.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpeechToText\SpeechToTextModule.csproj" />
+  </ItemGroup>
+
+</Project>
