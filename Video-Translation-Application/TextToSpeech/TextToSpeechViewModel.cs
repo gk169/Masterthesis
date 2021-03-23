@@ -14,14 +14,13 @@ namespace VideoTranslationTool.TextToSpeechModule
     /// <summary>
     /// Public abstract class <c>TextToSpeechViewModel</c> as view model for TextToSpeech view
     /// </summary>
-    public class TextToSpeechViewModel : ViewModel, IModuleViewModel
+    public class TextToSpeechViewModel : ModuleViewModel
     {
         #region Members
         private string _audioFilePath;
-        private ICommand _exportCommand;
         private string _language;
         private TextToSpeech _module;
-        [ImportMany(typeof(TextToSpeech))] private List<TextToSpeech> _supportedModules;
+        [ImportMany(typeof(TextToSpeech))] private List<TextToSpeech> _supportedModules = null;
         private ICommand _synthesizeCommand;
         private string _text;
         private string _voice;
@@ -38,18 +37,6 @@ namespace VideoTranslationTool.TextToSpeechModule
             {
                 _audioFilePath = value;
                 OnPropertyChanged(nameof(AudioPath));
-            }
-        }
-
-        /// <summary>
-        /// Public command <c>ExportCommand</c> calls export method if it is executable
-        /// </summary>
-        public ICommand ExportCommand
-        {
-            get
-            {
-                if (_exportCommand is null) _exportCommand = new RelayCommand(param => this.Export(), param => this.CanExport());
-                return _exportCommand;
             }
         }
 
@@ -102,7 +89,14 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// <summary>
         /// Public property <c>SupportedVoices</c> to get a list of supported voices
         /// </summary>
-        public List<string> SupportedVoices => _module.SupportedVoices[Language];
+        public List<string> SupportedVoices
+        {
+            get
+            {
+                if (Language is null) return null;
+                else return _module.SupportedVoices[Language];
+            }
+        }
 
         /// <summary>
         /// Public command <c>SynthesizeCommand</c> calls synthesize method if it is executable
@@ -176,15 +170,15 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// <returns>
         /// True if executable, otherwise false
         /// </returns>
-        private bool CanExport() => AudioPath is not null and not "";
+        protected override bool CanExport() => AudioPath is not null and not "";
 
         /// <summary>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </summary>
         /// <returns>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </returns>
-        public bool CanNext() => AudioPath is not null and not "";
+        public override bool CanNext() => AudioPath is not null and not "";
 
         /// <summary>
         /// Private method <c>CanSynthesize</c> indicates if synthesize method is executable
@@ -200,12 +194,28 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// <summary>
         /// Private method <c>Export</c> to export the synthesized audio file
         /// </summary>
-        private void Export()
+        protected override void Export()
         {
             SaveFileDialog saveFileDialog = new();
             saveFileDialog.Filter = "Audio file (*.mp3)|*.mp3";
             if (saveFileDialog.ShowDialog() == true) File.Copy(AudioPath, saveFileDialog.FileName);
         }
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </summary>
+        /// <returns>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </returns>
+        public override string GetResultforNextStep() => AudioPath;
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </summary>
+        /// <param name="resultsOfPrevious">
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </param>
+        public override void SetResultOfPreviousStep(string resultsOfPrevious) => Text = resultsOfPrevious;
 
         /// <summary>
         /// Private method <c>Synthesize</c> to synthesize the given text to a audio file

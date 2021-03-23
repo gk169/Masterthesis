@@ -1,15 +1,34 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 
 namespace VideoTranslationTool.SpeechToVideoModule
 {
+    [Export(typeof(SpeechToVideo))]
+    /// <summary>
+    /// Public class <c>Wav2Lip</c> to generate speech videos with Wav2Lip net
+    /// </summary>
     public class Wav2Lip : SpeechToVideo
     {
-        public Wav2Lip() : base(name: nameof(Wav2Lip))
-        {
-        }
+        #region Constructors
+        /// <summary>
+        /// Public constructor of <c>Wav2Lip</c> class
+        /// </summary>
+        public Wav2Lip() : base(name: nameof(Wav2Lip)) { }
+        #endregion Constructors
 
+        #region Methods
+        /// <summary>
+        /// See <see cref="SpeechToVideo.Generate(string, string)"/>
+        /// </summary>
+        /// <param name="inputAudioPath">
+        /// See <see cref="SpeechToVideo.Generate(string, string)"/>
+        /// </param>
+        /// <param name="inputVideoPath">
+        /// See <see cref="SpeechToVideo.Generate(string, string)"/>
+        /// </param>
+        /// <returns></returns>
         public override string Generate(string inputAudioPath, string inputVideoPath)
         {
             // Provide arguments
@@ -48,5 +67,6 @@ namespace VideoTranslationTool.SpeechToVideoModule
             if (errors != "") throw new Exception(errors);
             else return outputVideoPath_Windows;
         }
+        #endregion Methods
     }
 }

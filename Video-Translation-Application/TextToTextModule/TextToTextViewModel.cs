@@ -14,32 +14,19 @@ namespace VideoTranslationTool.TextToTextModule
     /// <summary>
     /// Public class <c>TextToTextViewModel</c> is view model for TextToText view
     /// </summary>
-    public class TextToTextViewModel : ViewModel, IModuleViewModel
+    public class TextToTextViewModel : ModuleViewModel
     {
         #region Members
-        private ICommand _exportCommand;
         private TextToText _module;
         private string _sourceLanguage;
         private string _sourceText;
-        [ImportMany(typeof(TextToText))] private List<TextToText> _supportedModules;
+        [ImportMany(typeof(TextToText))] private List<TextToText> _supportedModules = null;
         private string _targetLanguage;
         private string _targetText;
         private ICommand _translateCommand;
         #endregion Members
 
         #region Properties
-        /// <summary>
-        /// Public command <c>ExportCommand</c> calls export method if it is executable
-        /// </summary>
-        public ICommand ExportCommand
-        {
-            get
-            {
-                if (_exportCommand == null) _exportCommand = new RelayCommand(param => this.Export(), param => this.CanExport());
-                return _exportCommand;
-            }
-        }
-
         /// <summary>
         /// Public property <c>Module</c> to get / set the currently used TextToText module
         /// </summary>
@@ -101,8 +88,15 @@ namespace VideoTranslationTool.TextToTextModule
         /// <summary>
         /// Public property <c>SupportedTargetLanguages</c> to get a list of supported target languages
         /// </summary>
-        public List<string> SupportedTargetLanguages => _module.SupportedTranslations[SourceLanguage];
-        
+        public List<string> SupportedTargetLanguages
+        {
+            get
+            {
+                if (SourceLanguage is null) return null;
+                else return _module.SupportedTranslations[SourceLanguage];
+            }
+        }
+
         /// <summary>
         /// Public property <c>TargetLanguage</c> to get / set the language source text should be translated to as string
         /// </summary>
@@ -174,15 +168,15 @@ namespace VideoTranslationTool.TextToTextModule
         /// <returns>
         /// True if executable, otherwise false
         /// </returns>
-        private bool CanExport() => TargetText is not null and not "";
+        protected override bool CanExport() => TargetText is not null and not "";
 
         /// <summary>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </summary>
         /// <returns>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </returns>
-        public bool CanNext() => TargetText is not null and not "";
+        public override bool CanNext() => TargetText is not null and not "";
 
         /// <summary>
         /// Private method <c>CanTranslate</c> indicates if translate method is executable
@@ -197,12 +191,28 @@ namespace VideoTranslationTool.TextToTextModule
         /// <summary>
         /// Private method <c>Export</c> to export the translated text to a txt file
         /// </summary>
-        private void Export()
+        protected override void Export()
         {
             SaveFileDialog saveFileDialog = new();
             saveFileDialog.Filter = "Text file (*.txt)|*.txt";
             if (saveFileDialog.ShowDialog() == true) File.WriteAllText(saveFileDialog.FileName, TargetText);
         }
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </summary>
+        /// <returns>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </returns>
+        public override string GetResultforNextStep() => TargetText;
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </summary>
+        /// <param name="resultsOfPrevious">
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </param>
+        public override void SetResultOfPreviousStep(string resultsOfPrevious) => SourceText = resultsOfPrevious;
 
         /// <summary>
         /// Private method <c>Translate</c> to translate the source text and display the result

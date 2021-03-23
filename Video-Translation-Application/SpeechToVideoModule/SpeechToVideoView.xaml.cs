@@ -10,6 +10,7 @@ namespace VideoTranslationTool.SpeechToVideoModule
         public SpeechToVideoView()
         {
             InitializeComponent();
+            DataContext = new SpeechToVideoViewModel();
         }
     }
 }

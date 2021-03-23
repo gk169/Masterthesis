@@ -7,11 +7,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TextToTextView">
     <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

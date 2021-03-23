@@ -5,6 +5,9 @@ using System.Windows.Data;
 
 namespace VideoTranslationTool.Converters
 {
+    /// <summary>
+    /// Converter <c>BoolToVisibilityConverter</c> to convert bool to Button Visibility
+    /// </summary>
     public class BoolVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

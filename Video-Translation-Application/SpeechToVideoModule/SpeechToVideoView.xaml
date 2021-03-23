@@ -8,12 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SpeechToVideo_Page">
     <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
-                <!--<ResourceDictionary Source="/Common;component/UserControls/HhnColoredSlider.xaml"/>-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/Common;component/Icons/Icons.xaml"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -64,8 +59,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0"
-                                 Text="{Binding AudioPath}"
-                                 ToolTip="{Binding AudioPath}"/>
+                                 Text="{Binding InputAudioPath}"
+                                 ToolTip="{Binding InputAudioPath}"/>
                         <Button Grid.Column="1"
                                 ContentTemplate="{StaticResource OpenFolder}"
                                 Height="20"
@@ -73,7 +68,8 @@
                     </Grid>
                 </StackPanel>
 
-                <uc:AudioPlayer Grid.Row="2" Margin="0 10"/>
+                <uc:AudioPlayer Grid.Row="2" Margin="0 10" FilePath="{Binding InputAudioPath}"/>
+                
                 <StackPanel VerticalAlignment="Center" Grid.Row="3">
                     <Label>
                         <StackPanel Orientation="Horizontal">
@@ -90,15 +86,15 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0"
-                                 Text="{Binding VideoPath}"
-                                 ToolTip="{Binding VideoPath}"/>
+                                 Text="{Binding InputVideoPath}"
+                                 ToolTip="{Binding InputVideoPath}"/>
                         <Button Grid.Column="1"
                                 ContentTemplate="{StaticResource OpenFolder}"
                                 Height="20"
                                 Command="{Binding OpenVideoFileCommand}"/>
                     </Grid>
                 </StackPanel>
-                <uc:AudioPlayer Grid.Row="4" Margin="0 10 0 0"/>
+                <uc:VideoPlayer Grid.Row="4" Margin="0 10 0 0" FilePath="{Binding InputVideoPath}"/>
             </Grid>
         </GroupBox>
         <Button Grid.Column="1" Margin="10" VerticalAlignment="Center" Content="Generate"
@@ -112,7 +108,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <MediaElement Grid.Row="0" LoadedBehavior="Stop" Source="D:\GitRepos\Masterthesis\data\generated\videos\Wav2Lip_wav_gan_video_biden_audio_merkel.mp4"/>
+                <uc:VideoPlayer Grid.Row="0" FilePath="{Binding OutputVideoPath}"/>
                 <Button Grid.Row="1" Margin="0 10 0 0" Width="80" Content="Export Video" Command="{Binding ExportCommand}"/>
             </Grid>
         </GroupBox>

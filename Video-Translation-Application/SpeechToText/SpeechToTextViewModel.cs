@@ -13,12 +13,11 @@ namespace VideoTranslationTool.SpeechToTextModule
     /// <summary>
     /// Public class <c>SpeechToTextViewModel</c> is view model for SpeechToTextView
     /// </summary>
-    public class SpeechToTextViewModel : ViewModel, IModuleViewModel
+    public class SpeechToTextViewModel : ModuleViewModel
     {
         #region Members
         private string _audioLanguage;
         private string _audioPath;
-        private ICommand _exportCommand;
         private SpeechToText _module;
         private ICommand _openAudioFileCommand;
         [ImportMany(typeof(SpeechToText))] private List<SpeechToText> _supportedModules = null;
@@ -50,18 +49,6 @@ namespace VideoTranslationTool.SpeechToTextModule
             {
                 _audioPath = value;
                 OnPropertyChanged(nameof(AudioPath));
-            }
-        }
-
-        /// <summary>
-        /// Public command <c>ExportCommand</c> calls Export method if executable
-        /// </summary>
-        public ICommand ExportCommand
-        {
-            get
-            {
-                if (_exportCommand is null) _exportCommand = new RelayCommand(param => this.Export(), param => this.CanExport());
-                return _exportCommand;
             }
         }
 
@@ -150,15 +137,15 @@ namespace VideoTranslationTool.SpeechToTextModule
         /// <returns>
         /// True if executable, otherwise false
         /// </returns>
-        private bool CanExport() => Text is not null and not "";
+        protected override bool CanExport() => Text is not null and not "";
 
         /// <summary>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </summary>
         /// <returns>
-        /// See <see cref="IModuleViewModel.CanNext"/>
+        /// See <see cref="ModuleViewModel.CanNext"/>
         /// </returns>
-        public bool CanNext() => Text is not null and not "";
+        public override bool CanNext() => Text is not null and not "";
 
         /// <summary>
         /// Private method <c>CanOpenFile</c> indicateds if OpenFile method is executable
@@ -180,11 +167,19 @@ namespace VideoTranslationTool.SpeechToTextModule
         /// <summary>
         /// Private method <c>Export</c> exports the transcribed text to a text-file
         /// </summary>
-        private void Export()
+        protected override void Export()
         {
             SaveFileDialog saveFileDialog = new() { Filter = "Text file (*.txt)|*.txt", };
             if (saveFileDialog.ShowDialog() == true) File.WriteAllText(saveFileDialog.FileName, Text);
         }
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </summary>
+        /// <returns>
+        /// See <see cref="ModuleViewModel.GetResultforNextStep"/>
+        /// </returns>
+        public override string GetResultforNextStep() => Text;
 
         /// <summary>
         /// Private method <c>OpenFile</c> to show OpenFileDialog and ask the user to select a audio file
@@ -198,7 +193,19 @@ namespace VideoTranslationTool.SpeechToTextModule
 
             if (openFileDialog.ShowDialog() == true) AudioPath = openFileDialog.FileName;
         }
-        
+
+        /// <summary>
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </summary>
+        /// <param name="resultsOfPrevious">
+        /// See <see cref="ModuleViewModel.SetResultOfPreviousStep(string)"/>
+        /// </param>
+        public override void SetResultOfPreviousStep(string resultsOfPrevious)
+        {
+            // no previous step
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Private method <c>Transcribe</c> calls the Transcribe method of the module
         /// </summary>
@@ -210,7 +217,7 @@ namespace VideoTranslationTool.SpeechToTextModule
             catch (Exception e) { MessageBox.Show(e.ToString()); }          // show occurring errors
 
             if (text is not null) Text = text;
-        }        
+        }
         #endregion Methods
     }
 }

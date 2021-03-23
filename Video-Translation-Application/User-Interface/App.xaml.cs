@@ -10,12 +10,8 @@ namespace VideoTranslationTool
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow window = new()
-            {
-                //DataContext = new MainViewModel()
-            };
-            //window.Main.Content = new Start_Page();
-            window.Main.Content = new WorkflowFrame();
+            MainWindow window = new();
+            window.Main.Content = new StartPage();
             window.Show();
         }
     }

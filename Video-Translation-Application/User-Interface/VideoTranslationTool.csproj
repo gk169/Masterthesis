@@ -5,11 +5,10 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>VideoTranslationTool</RootNamespace>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <Authors>Kevin Gann</Authors>
+    <Company>Hochschule Heilbronn</Company>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NAudio" Version="2.0.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
@@ -19,10 +18,12 @@
     <ProjectReference Include="..\GoogleTTS\GoogleTTS.csproj" />
     <ProjectReference Include="..\MarianMT\MarianMT.csproj" />
     <ProjectReference Include="..\PyTTSx3\PyTTSx3.csproj" />
+    <ProjectReference Include="..\RTVC\RTVC.csproj" />
     <ProjectReference Include="..\SpeechToText\SpeechToTextModule.csproj" />
-    <ProjectReference Include="..\Sphinx\Sphinx.csproj" />
+    <ProjectReference Include="..\SpeechToVideoModule\SpeechToVideoModule.csproj" />
     <ProjectReference Include="..\TextToSpeech\TextToSpeechModule.csproj" />
     <ProjectReference Include="..\TextToTextModule\TextToTextModule.csproj" />
+    <ProjectReference Include="..\Wav2Lip\Wav2Lip.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,8 @@
+﻿AppIcons is designed by Kevin Gann
+
+Used resources:
+
+Name	Source
+
+Action: translate	Google Icon Library (https://material.io/resources/icons)
+Av: videocam		Google Icon Library (https://material.io/resources/icons)

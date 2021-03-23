@@ -1,0 +1,15 @@
+﻿Icon						Original name							Source
+
+arrow.png					Content: Forward						Google Icon Library (https://material.io/resources/icons)
+Audio (Icons.xaml)			Image: music_note						Google Icon Library (https://material.io/resources/icons)
+Generate.png				AWS/ML: DeepLearning AMIs				Draw.io
+Help (Icons.xaml)			Action: help							Google Icon Library (https://material.io/resources/icons)
+HHN_Logo.png				hhn-logo-eng.png						HHN Homepage (https://www.hs-heilbronn.de/download)
+Open_Folder (Icons.xaml)	File: folder							Google Icon Library (https://material.io/resources/icons)
+Pause (Icons.xaml)			Av: pause								Google Icon Library (https://material.io/resources/icons)
+Play (Icons.xaml)			Av: play_arrow							Google Icon Library (https://material.io/resources/icons)
+Stop (Icons.xaml)			Av: stop								Google Icon Library (https://material.io/resources/icons)
+Synthesize.png				AWS/ML: Polly							Draw.io
+Transcribe.png				AWS/ML: Transcribe						Draw.io
+Translate.png				AWS/ML: Translate						Draw.io
+ZML_Logo.png				Zentrum-f-r-Maschinelles-Lernen-ZML		HHN Homepage (https://www.hs-heilbronn.de/zml)

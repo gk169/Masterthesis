@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Code from: https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern //
+
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 

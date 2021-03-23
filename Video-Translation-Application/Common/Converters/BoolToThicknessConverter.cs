@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace VideoTranslationTool.Converters
 {
+    /// <summary>
+    /// Converter <c>BoolToThicknessConverter</c> to convert bool to Button Border Thickness
+    /// </summary>
     public class BoolToThicknessConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

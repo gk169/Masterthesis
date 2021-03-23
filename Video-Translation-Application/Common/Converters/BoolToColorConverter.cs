@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace VideoTranslationTool.Converters
 {
+    /// <summary>
+    /// Converter <c>BoolToColorConverter</c> to convert bool to Button BorderBrush Color
+    /// </summary>
     public class BoolToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
