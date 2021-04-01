@@ -9,7 +9,7 @@ from vocoder import inference as vocoder
 
 import numpy as np
 import soundfile as sf
-import pathlib
+#import pathlib
 #from datetime import datetime
 import torch
 
@@ -17,19 +17,21 @@ Audio_Source_Path = sys.argv[1]#pathlib.Path(__file__).parent.joinpath('RealTime
 
 Text = sys.argv[2]
 
-Audio_Target_Path = sys.argv[4]#pathlib.Path(__file__).parent.parent.parent.joinpath('data').joinpath('generated').joinpath('audios')
+enc_model_fpath = sys.argv[3] #Common_path.joinpath('encoder.pt')
+syn_model_fpath = sys.argv[4] #Common_path.joinpath('synthesizer.pt')
+voc_model_fpath = sys.argv[5] #Common_path.joinpath('vocoder.pt')
+
+Audio_Target_Path = sys.argv[6]#pathlib.Path(__file__).parent.parent.parent.joinpath('data').joinpath('generated').joinpath('audios')
 
 #Text = 'The coronavirus is currently changing life in our country dramatically.\nOur idea of normality,\nof public life and social interaction:\nAll of this is being put to the test like never before.\nMillions of them cannot go to work,\ntheir children cannot go to school or to daycare.\nTheaters,\ncinemas and shops are closed\nand what is perhaps the hardest thing:\nWe all miss the encounter that we usually do.\n'
 #Text = 'Das Coronavirus verändert zur Zeit das Leben in unserem Land dramatisch.\nUnsere Vorstellung von Normalität,\nvon öffentlichen Leben,\nvon sozialem Miteinander:\nAll das wird auf die Probe gestellt wie nie zuvor.\nMillionen von ihnen können nicht zur Arbeit.\nIhre Kinder können nicht zur Schule oder in die Kita.\nTheater und Kinos und Geschäfte sind geschlossen,\nund was vielleicht das Schwerste ist:\nUns allen fehlen die Begegnung die sonst selbstverständlich sind.'
 #print(Text)
 
-WeightsPath = sys.argv[3]
+#WeightsPath = sys.argv[3]
 
-Common_path = Path(WeightsPath)
+#Common_path = Path(WeightsPath)
 
-enc_model_fpath = Common_path.joinpath('encoder.pt')
-syn_model_fpath = Common_path.joinpath('synthesizer.pt')
-voc_model_fpath = Common_path.joinpath('vocoder.pt')
+
 
     
 #print("Running a test of your configuration...\n")
