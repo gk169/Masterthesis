@@ -4,10 +4,11 @@
 # Jupyter notebook checkpoint folders
 **/.ipynb_checkpoints
 
+# Python cache
+__pycache__/
 
-
-
-
+# Pyinstaller stuff
+build/
 
 # Visual Studio Stuff
 ## Ignore Visual Studio temporary files, build results, and
