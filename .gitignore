@@ -9,6 +9,7 @@ __pycache__/
 
 # Pyinstaller stuff
 build/
+dist/
 
 # Visual Studio Stuff
 ## Ignore Visual Studio temporary files, build results, and
