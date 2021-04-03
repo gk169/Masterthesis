@@ -1,0 +1,9 @@
+name: RTVC
+channels:
+ - anaconda
+ - conda-forge
+dependencies:
+ - python=3.6
+
+# conda activate RTVC
+# pip install -r requirements.txt

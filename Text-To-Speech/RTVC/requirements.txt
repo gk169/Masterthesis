@@ -1,0 +1,20 @@
+-f https://download.pytorch.org/whl/torch_stable.html
+torch===1.7.1+cu110
+torchvision===0.8.2+cu110
+torchaudio===0.7.2
+#umap-learn
+#visdom
+librosa
+matplotlib
+#>=3.3.0
+numpy==1.19.3; platform_system == "Windows"
+#scipy>=1.0.0
+#tqdm
+#sounddevice
+unidecode
+inflect
+#multiprocess
+#numba
+#pyaudio
+webrtcvad-wheels; platform_system == "Windows"
+#ffmpeg-python
