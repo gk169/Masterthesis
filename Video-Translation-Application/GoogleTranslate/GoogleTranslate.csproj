@@ -7,14 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="GoogleTranslate.exe" />
     <None Remove="GoogleTranslate_SupportedLanguages.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="GoogleTranslate.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="GoogleTranslate_SupportedLanguages.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

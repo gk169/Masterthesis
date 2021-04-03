@@ -41,7 +41,7 @@ namespace VideoTranslationTool.SpeechToTextModule
 
             // Load new weights, scorers and languages from directory
             // Expected: deepSpeechDataPath/<Language (Country)/<...>.scorer and <...>.pbmm
-            string deepSpeechDataPath = @"D:\GitRepos\Masterthesis\weights\DeepSpeech";
+            string deepSpeechDataPath = @"E:\206309_Gann_Kevin\weights\DeepSpeech";
 
             string[] folderPaths = Directory.GetDirectories(deepSpeechDataPath);
 
@@ -83,6 +83,7 @@ namespace VideoTranslationTool.SpeechToTextModule
         /// </returns>
         public override string Transcribe(string audioPath, string audioLanguage)
         {
+            #region Inputs
             // If file is mp3 -> convert to wav
             if (Path.GetExtension(audioPath) == ".mp3")
             {
@@ -102,16 +103,27 @@ namespace VideoTranslationTool.SpeechToTextModule
             string outputTextPath_Unix = outputTextPath.Replace(@"\", "/");
             string weightsPath_Unix = weightsPath.Replace(@"\", "/");
             string scorerPath_Unix = scorerPath.Replace(@"\", "/");
+            #endregion Inputs
 
-            // Provide executable
-            string executable = @"C:\ProgramData\Anaconda3\envs\DeepSpeech\python.exe";
-            string script = @"D:\GitRepos\Masterthesis\git\Speech-To-Text\DeepSpeech\DeepSpeech_Script.py";
-            string arguments = $"\"{script}\" \"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
+            #region Process
+            #region Option 1: Python script
+            /*
+            string executable = "cmd.exe";
 
-            //string executable = @"\DeepSpeech.exe";
-            //string arguments = $"\"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
+            string script = @"E:\206309_Gann_Kevin\git\Speech-To-Text\DeepSpeech\DeepSpeech_Script.py";
+            string deepspeechArguments = $"\"{script}\" \"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
 
-            // Create process info
+            string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate DeepSpeech" + "&&" + "python " + deepspeechArguments;
+            */
+            #endregion Option 1: Python script
+
+            #region Option 2: Executable - not working yet!
+            
+            string executable = @"E:\206309_Gann_Kevin\git\Speech-To-Text\DeepSpeech\dist\DeepSpeech_Script.exe";
+            string arguments = $"\"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
+            
+            #endregion Option 2: Executable
+
             ProcessStartInfo processStartInfo = new()
             {
                 FileName = executable,
@@ -124,10 +136,12 @@ namespace VideoTranslationTool.SpeechToTextModule
             // Execute process and get output
             string errors = "";
             using (Process process = Process.Start(processStartInfo)) { errors = process.StandardError.ReadToEnd(); }
+            #endregion Process
 
-            // Handle errors and outputs
-            if (errors != "") throw new Exception(errors);
+            #region Outputs
+            if (errors.Contains("Error")) throw new Exception(errors);
             else return File.ReadAllText(outputTextPath);
+            #endregion Outputs
         }
         #endregion Methods
     }

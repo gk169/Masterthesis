@@ -85,25 +85,34 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// </returns>
         public override string Synthesize(string text, string language, string voice)
         {
-            /* Arguments */
+            #region Inputs
             string languageCode = _languageCodeDictionary[language];
             string outputAudioPath = Path.GetTempPath() + "SynthesizedAudio.mp3";
 
             /* Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/ */
             string outputAudioPath_Unix = outputAudioPath.Replace(@"\", "/");
             string text_Unix = text.Replace("\r\n", "\n");
+            #endregion Inputs
 
-            /* Executable */
-            // Option 1) Python script
-            string executable = @"C:\ProgramData\Anaconda3\envs\TTS\python.exe";
-            string script = @"D:\GitRepos\Masterthesis\git\Text-To-Speech\GoogleTTS_Script.py";
-            string arguments = $"\"{script}\" \"{text_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
+            #region Process
+            #region Option 1: Python script
+            /*
+            string executable = "cmd.exe";
 
-            //// Option 2) Generated executable
-            //string executable = @"GoogleTTS.exe";
-            //string arguments = $"\"{text}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
+            string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\GoogleTTS\GoogleTTS_Script.py";
+            string googlettsArguments = $"\"{script}\" \"{text_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
 
-            /* Process executable */
+            string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate GoogleTTS" + "&&" + "python " + googlettsArguments;
+            */
+            #endregion Option 1: Python script
+
+            #region Option 2: Executable
+
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\GoogleTTS\dist\GoogleTTS_Script.exe";
+            string arguments = $"\"{text_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
+            
+            #endregion Option 2: Executable
+
             ProcessStartInfo processStartInfo = new()
             {
                 FileName = executable,
@@ -115,10 +124,12 @@ namespace VideoTranslationTool.TextToSpeechModule
 
             string errors = "";
             using (Process process = Process.Start(processStartInfo)) { errors = process.StandardError.ReadToEnd(); }
+            #endregion Process
 
-            /* Handle errors and output */
+            #region Outputs
             if (errors != "") throw new Exception(errors);
             else return outputAudioPath;
+            #endregion Outputs
         }
         #endregion Methods
     }

@@ -73,25 +73,34 @@ namespace VideoTranslationTool.TextToTextModule
         /// </summary>
         public override string Translate(string sourceText, string sourceLanguage, string targetLanguage)
         {
-            /* Arguments */
+            #region Inputs
             string sourceLanguageCode = _languageCodeDictionary[sourceLanguage];
             string targetLanguageCode = _languageCodeDictionary[targetLanguage];
             string outputTextPath = Path.GetTempPath() + "TranslatedText.txt";
 
-            /* Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/ */
+            // Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/
             string outputTextPath_Unix = outputTextPath.Replace(@"\", "/");
             string sourceText_Unix = sourceText.Replace("\r\n", "\n");
+            #endregion Inputs
 
-            /* Executable */
+            #region Process
+            #region Option 1: Python script
+            /*
+            string executable = "cmd.exe";
 
-            //// Option 1) Python script
-            //string executable = @"C:\ProgramData\Anaconda3\python.exe";
-            //string script = @"D:\GitRepos\Masterthesis\git\Text-To-Text-Translation\GoogleTranslate_Script.py";
-            //string arguments = $"\"{script}\" \"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
+            string script = @"E:\206309_Gann_Kevin\git\Text-To-Text\GoogleTranslate\GoogleTranslate_Script.py";
+            string googletranslateArguments = $"\"{script}\" \"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
 
-            // Option 2) Generated executable
-            string executable = @"GoogleTranslate.exe";
+            string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate GoogleTranslate" + "&&" + "python " + googletranslateArguments;
+            */
+            #endregion Option 1: Python script
+
+            #region Option 2: Executable
+
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Text\GoogleTranslate\dist\GoogleTranslate_Script.exe";
             string arguments = $"\"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
+
+            #endregion Option 2: Executable
 
             /* Process executable */
             ProcessStartInfo processStartInfo = new()
@@ -101,14 +110,16 @@ namespace VideoTranslationTool.TextToTextModule
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardError = true,
-            };
-
+            };            
+            
             string errors = "";
             using (Process process = Process.Start(processStartInfo)) { errors = process.StandardError.ReadToEnd(); }
+            #endregion Process
 
-            /* Handle errors and output */
+            #region Outputs
             if (errors != "") throw new Exception(errors);
             else return File.ReadAllText(outputTextPath);
+            #endregion Outputs
         }
         #endregion Methods
     }
