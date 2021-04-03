@@ -1,0 +1,8 @@
+name: GoogleTTS
+
+dependencies:
+ - python
+
+# conda activate GoogleTTS
+
+# pip install -r requirements.txt
