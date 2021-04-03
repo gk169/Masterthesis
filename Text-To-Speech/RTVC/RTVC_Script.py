@@ -1,13 +1,11 @@
 import sys, pathlib
 
-RTVC_Path = str(pathlib.Path(__file__).parent.resolve().joinpath('Real-Time-Voice-Cloning'))
+RTVC_Path = str(pathlib.Path(__file__).parent.resolve().joinpath('RealTimeVoiceCloning'))
 if not RTVC_Path in sys.path:
     sys.path.append(RTVC_Path)
 
-#print(sys.path)
-#input("Enter your name")
-#if not './Real-Time-Voice-Cloning' in sys.path:
-#    sys.path.append('./Real-Time-Voice-Cloning')
+#if not 'RealTimeVoiceCloning' in sys.path:
+#    sys.path.append('RealTimeVoiceCloning')
 
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
