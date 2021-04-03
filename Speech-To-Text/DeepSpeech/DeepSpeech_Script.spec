@@ -5,7 +5,7 @@ block_cipher = None
 
 a = Analysis(['DeepSpeech_Script.py'],
              pathex=['E:\\206309_Gann_Kevin\\git\\Speech-To-Text\\DeepSpeech'],
-             binaries=[],
+             binaries=[ ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Library\\bin\\cudart64_101.dll', '.'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Library\\bin\\cublas64_10.dll', '.'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Library\\bin\\cublasLt64_10.dll', '.'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Library\\bin\\cusparse64_10.dll', '.'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Library\\bin\\cudnn64_7.dll', '.') ],
              datas=[ ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Lib\\site-packages\\numpy\\', 'numpy\\'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Lib\\site-packages\\deepspeech', 'deepspeech'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Lib\\site-packages\\librosa', 'librosa'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Lib\\site-packages\\scipy', 'scipy'), ('C:\\ProgramData\\Anaconda3\\envs\\DeepSpeech\\Lib\\site-packages\\sklearn', 'sklearn') ],
              hiddenimports=[],
              hookspath=[],
