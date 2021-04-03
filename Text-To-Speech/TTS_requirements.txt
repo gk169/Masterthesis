@@ -1,9 +1,0 @@
-#notebook
-spyder>=4.1
-rtree>=0.9
-
-# Google
-gtts
-
-# Pyttsx2
-pyttsx3

@@ -1,7 +1,0 @@
-name: TTS
-dependencies:
- - python=3.7
-
-# conda activate TTS
-
-# pip install -r TTS_requirements.txt
