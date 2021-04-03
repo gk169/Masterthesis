@@ -1,2 +1,2 @@
-deepspeech
-#-gpu
+deepspeech-gpu
+librosa

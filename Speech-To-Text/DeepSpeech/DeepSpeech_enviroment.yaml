@@ -1,14 +1,10 @@
 name: DeepSpeech
 channels:
  - anaconda
- - conda-forge
- - pytorch
 dependencies:
- - python>=3.6
- - librosa
- - spyder
- - numpy<=1.17.3
- 
-# conda activate DeepSpeech
+ - python=3.7.10
+ - cudatoolkit=10.1.243
+ - cudnn
 
+# conda activate DeepSpeech
 # pip install -r requirements.txt
