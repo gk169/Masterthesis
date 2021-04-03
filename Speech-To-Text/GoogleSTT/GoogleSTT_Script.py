@@ -1,9 +1,9 @@
 import speech_recognition as sr
 import sys
 
-Audio_File_Path = sys.argv[1]
-Audio_Language = sys.argv[2]
-Output_Path = sys.argv[3]
+Audio_File_Path = sys.argv[1]   #.wav
+Audio_Language = sys.argv[2]    #de-DE
+Output_Path = sys.argv[3]       #.txt
 
 r = sr.Recognizer()
 with sr.AudioFile(Audio_File_Path) as source:

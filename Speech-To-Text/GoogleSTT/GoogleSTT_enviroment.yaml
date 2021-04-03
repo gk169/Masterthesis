@@ -1,0 +1,11 @@
+name: GoogleSTT
+channels:
+ - anaconda
+# - conda-forge
+# - pytorch
+dependencies:
+ - python=3.6
+ 
+# conda activate GoogleSTT
+
+# pip install -r requirements.txt

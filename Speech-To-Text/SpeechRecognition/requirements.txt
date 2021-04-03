@@ -1,9 +1,0 @@
-# for speech_recognition
-SpeechRecognition>=3.8
-pyaudio>=0.2
-pipwin>=0.5
-chardet<4
-spyder>=4.1.5
-rtree==0.9
-jedi<0.18
-numpy>=1.15
