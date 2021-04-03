@@ -4,6 +4,7 @@
 import tensorflow as tf
 #from datetime import datetime
 import soundfile as sf
+import sys
 #import pathlib
 
 from tensorflow_tts.inference import TFAutoModel
@@ -24,7 +25,7 @@ from tensorflow_tts.inference import AutoProcessor
 #Fastspeech2_Weights_Path_En = str(Feature_Generation_Path_En.joinpath('Fastspeech2').joinpath('fastspeech2-150k.h5'))
 #Tacotron2_Weights_Path_En = str(Feature_Generation_Path_En.joinpath('Tacotron2').joinpath('tacotron2-120k.h5'))
 Feature_Generation = sys.argv[3]
-Feature_config = sys.argv[4]
+Feature_Config = sys.argv[4]
 
 # English feature generation configs
 #Fastspeech1_Configs_Path_En = str(Feature_Generation_Path_En.joinpath('Fastspeech1').joinpath('fastspeech1.v1.yaml'))
@@ -70,7 +71,7 @@ Processor = sys.argv[8]
 
 # Adapt TensorFlowTTS here!
 
-Feature_Generation_Config = AutoConfig.from_pretrained(Feature_Generation_Config) #Tacotron2_Configs_Path_De)
+Feature_Config = AutoConfig.from_pretrained(Feature_Config) #Tacotron2_Configs_Path_De)
 Vocoder_Config = AutoConfig.from_pretrained(Vocoder_Config) #MB_MelGAN_Configs_Path_De)
 Processor = AutoProcessor.from_pretrained(Processor) #Processor_Path_De)
 #Feature_Generation_Weights = Tacotron2_Weights_Path_De
@@ -85,7 +86,7 @@ input_text = sys.argv[1] #"Bill got in the habit of asking himself “Is that th
 
 # Run TensorFlowTTS
 
-Feature_Generator = TFAutoModel.from_pretrained(config=Feature_Generation_Config, pretrained_path=Feature_Generation, name=Feature_Generation_Name)
+Feature_Generator = TFAutoModel.from_pretrained(config=Feature_Config, pretrained_path=Feature_Generation, name=Feature_Generation_Name)
 Vocoder = TFAutoModel.from_pretrained(config=Vocoder_Config, pretrained_path=Vocoder, name=Vocoder_Name)
 
 

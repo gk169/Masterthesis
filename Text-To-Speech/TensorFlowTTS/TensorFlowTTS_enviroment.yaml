@@ -1,13 +1,9 @@
 name: TensorFlowTTS
 channels:
  - anaconda
- - conda-forge
 dependencies:
  - python=3.7
 
 # conda activate TensorFlowTTS
 
-# cd TensorFlowTTS
-# pip install .
-
-# pip install -r requirements.txt
+# pip install TensorFlowTTS/.
