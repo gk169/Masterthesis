@@ -1,17 +1,14 @@
 name: MarianMT
 channels:
  - anaconda
- - conda-forge
  - pytorch
  - huggingface
 dependencies:
- - python>3.6
+ - python
  - pytorch
  - torchvision
  - cudatoolkit=11.0
- - spyder
  - transformers
-# - tensorflow-gpu>2.0
 
 # conda activate MarianMT
 
