@@ -1,0 +1,6 @@
+name: GoogleTranslate
+channels:
+ - anaconda
+dependencies:
+ - python
+ - requests

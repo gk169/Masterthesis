@@ -4,11 +4,11 @@ import requests
 import urllib
 import sys
 
-sourceLangCode = sys.argv[1]
-targetLangCode = sys.argv[2]
+sourceLangCode = sys.argv[1]    #de
+targetLangCode = sys.argv[2]    #en
 
-input_text = sys.argv[3]
-output_path = sys.argv[4]
+input_text = sys.argv[3]        #"text"
+output_path = sys.argv[4]       #.txt
 
 text = urllib.parse.quote(input_text)
 
