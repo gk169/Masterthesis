@@ -4,3 +4,6 @@
 [submodule "Text-To-Speech/RTVC/RealTimeVoiceCloning"]
 	path = Text-To-Speech/RTVC/RealTimeVoiceCloning
 	url = https://github.com/gk169/RealTimeVoiceCloning.git
+[submodule "Text-To-Speech/TensorFlowTTS/TensorFlowTTS"]
+	path = Text-To-Speech/TensorFlowTTS/TensorFlowTTS
+	url = https://github.com/gk169/TensorFlowTTS.git
