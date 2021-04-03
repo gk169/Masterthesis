@@ -222,12 +222,17 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// </summary>
         private void Synthesize()
         {
+            Cursor previousCursor = Application.Current.MainWindow.Cursor;
+            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+
             string newAudioPath = null;
 
             try { newAudioPath = _module.Synthesize(Text, Language, Voice); }
             catch (Exception e) { MessageBox.Show(e.ToString()); }
 
             if (newAudioPath is not null) AudioPath = newAudioPath;
+
+            Application.Current.MainWindow.Cursor = previousCursor;
         }
         #endregion Methods
     }

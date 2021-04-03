@@ -93,7 +93,7 @@
                         </StackPanel>
                     </Label>
                     <TextBox Grid.Row="1"
-                             Text="{Binding Text}"
+                             Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
                              AcceptsReturn="True"
                              TextWrapping="Wrap"
                              VerticalScrollBarVisibility="Visible"/>

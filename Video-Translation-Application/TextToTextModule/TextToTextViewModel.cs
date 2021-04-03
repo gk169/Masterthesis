@@ -219,12 +219,17 @@ namespace VideoTranslationTool.TextToTextModule
         /// </summary>
         private void Translate()
         {
+            Cursor previousCursor = Application.Current.MainWindow.Cursor;
+            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
+
             string text = null;
 
             try { text = _module.Translate(SourceText, SourceLanguage, TargetLanguage); }
             catch (Exception e) { MessageBox.Show(e.ToString()); }
 
             if (text != null) TargetText = text;
+
+            Application.Current.MainWindow.Cursor = previousCursor;
         }
         #endregion Methods
     }

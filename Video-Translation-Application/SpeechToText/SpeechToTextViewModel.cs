@@ -211,12 +211,16 @@ namespace VideoTranslationTool.SpeechToTextModule
         /// </summary>
         private void Transcribe()
         {
+            Cursor previousCursor = Application.Current.MainWindow.Cursor;
+            Application.Current.MainWindow.Cursor = System.Windows.Input.Cursors.Wait;
             string text = null;
 
             try { text = _module.Transcribe(AudioPath, AudioLanguage); }    // try to transcribe
             catch (Exception e) { MessageBox.Show(e.ToString()); }          // show occurring errors
 
             if (text is not null) Text = text;
+
+            Application.Current.MainWindow.Cursor = previousCursor;
         }
         #endregion Methods
     }
