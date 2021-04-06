@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>VideoTranslationTool</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <Authors>Kevin Gann</Authors>
+    <Company>Hochschule Heilbronn</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpeechToText\Modules\DeepSpeech\DeepSpeech.csproj" />
+    <ProjectReference Include="..\SpeechToText\Modules\GoogleSTT\GoogleSTT.csproj" />
+    <ProjectReference Include="..\SpeechToVideo\Modules\Wav2Lip\Wav2Lip.csproj" />
+    <ProjectReference Include="..\TextToSpeech\Modules\GoogleTTS\GoogleTTS.csproj" />
+    <ProjectReference Include="..\TextToSpeech\Modules\PyTTSx3\PyTTSx3.csproj" />
+    <ProjectReference Include="..\TextToSpeech\Modules\RTVC\RTVC.csproj" />
+    <ProjectReference Include="..\TextToSpeech\Modules\TensorFlowTTS\TensorFlowTTS.csproj" />
+    <ProjectReference Include="..\TextToText\Modules\GoogleTranslate\GoogleTranslate.csproj" />
+    <ProjectReference Include="..\TextToText\Modules\MarianMT\MarianMT.csproj" />
+  </ItemGroup>
+
+</Project>

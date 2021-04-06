@@ -1,9 +1,0 @@
-https://cloud.google.com/speech-to-text/docs/languages
-Name 	BCP-47 	Model 	Automatic punctuation 	Diarization 	Boost 	Word-level confidence 	Profanity filter
-English (United States) 	en-US 	Command and search 	✔ 	✔ 	✔ 	✔ 	✔
-English (United States) 	en-US 	Default 	✔ 	✔ 	✔ 	✔ 	✔
-English (United States) 	en-US 	Enhanced phone call 	✔ 	✔ 	✔ 	✔ 	✔
-English (United States) 	en-US 	Enhanced video 	✔ 	✔ 	✔ 	✔ 	✔
-English (United States) 	en-US 	Phone call 	✔ 	✔ 	✔ 	✔ 	✔
-German (Germany) 	de-DE 	Command and search 	✔ 	✔ 	✔ 		✔
-German (Germany) 	de-DE 	Default 	✔ 	✔ 	✔ 		✔
