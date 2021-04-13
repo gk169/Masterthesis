@@ -1,8 +1,12 @@
 name: TensorFlowTTS
 channels:
  - anaconda
+ - conda-forge
 dependencies:
  - python=3.7
+# Note 2021-04-09 latest matplotlib (3.4) cannot be processed by pyinstaller!
+ - matplotlib=3.1.1
+
 
 # conda activate TensorFlowTTS
 
