@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using VideoTranslationTool.FileUtils;
 
 namespace VideoTranslationTool.SpeechToTextModule
 {
@@ -75,6 +76,20 @@ namespace VideoTranslationTool.SpeechToTextModule
             string outputTextPath = Path.GetTempPath() + "TranscribedText.txt";
             string audioLanguageCode = _languageCodeDictionary[audioLanguage];
 
+            // If file is mp3 -> convert to wav
+            if (Path.GetExtension(inputAudioPath) == ".mp3")
+            {
+                string audioPath_wav = Path.GetTempPath() + "ToTranscribe.wav";
+                AudioConverter.Mp3ToWav(inputAudioPath, audioPath_wav);
+                inputAudioPath = audioPath_wav;
+            }
+            else if (Path.GetExtension(inputAudioPath) is ".wav") // Make sure that wav pcm is used
+            {
+                string audioPath_wav = Path.GetTempPath() + "ToTranscribe.wav";
+                AudioConverter.WavToWavPcm(inputAudioPath, audioPath_wav);
+                inputAudioPath = audioPath_wav;
+            }
+
             // Transform paths https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/
             string inputAudioPath_Unix = inputAudioPath.Replace(@"\", "/");
             string outputTextPath_Unix = outputTextPath.Replace(@"\", "/");
@@ -82,21 +97,21 @@ namespace VideoTranslationTool.SpeechToTextModule
 
             #region Process
             #region Option 1: Python script
-            /*
+            
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Speech-To-Text\GoogleSTT\GoogleSTT_Script.py";
             string googlesttArguments = $"\"{script}\" \"{inputAudioPath_Unix}\" \"{audioLanguageCode}\" \"{outputTextPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate GoogleSTT" + "&&" + "python " + googlesttArguments;
-            */
+            
             #endregion Option 1: Python script
 
             #region Option 2: Executable
-
+            /*
             string executable = @"E:\206309_Gann_Kevin\git\Speech-To-Text\GoogleSTT\dist\GoogleSTT_Script.exe";
             string arguments = $"\"{inputAudioPath_Unix}\" \"{audioLanguageCode}\" \"{outputTextPath_Unix}\"";
-
+            */
             #endregion Option 2: Executable
 
             ProcessStartInfo processStartInfo = new()
@@ -104,7 +119,7 @@ namespace VideoTranslationTool.SpeechToTextModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };            
 
