@@ -226,12 +226,14 @@ namespace VideoTranslationTool.TextToSpeechModule
 
             Application.Current.MainWindow.Cursor = Cursors.Wait;
 
+            AudioPath = null; // Set audio to off and unload current file
+
             string newAudioPath = null;
 
             try { newAudioPath = _module.Synthesize(Text, Language, Voice); }
             catch (Exception e) { MessageBox.Show(e.ToString()); }
 
-            if (newAudioPath is not null) AudioPath = newAudioPath;
+            AudioPath = newAudioPath;
 
             Application.Current.MainWindow.Cursor = previousCursor;
         }
