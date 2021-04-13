@@ -107,21 +107,21 @@ namespace VideoTranslationTool.SpeechToTextModule
 
             #region Process
             #region Option 1: Python script
-            /*
+            
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Speech-To-Text\DeepSpeech\DeepSpeech_Script.py";
             string deepspeechArguments = $"\"{script}\" \"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate DeepSpeech" + "&&" + "python " + deepspeechArguments;
-            */
+            
             #endregion Option 1: Python script
 
             #region Option 2: Executable - not working yet!
-            
+            /*
             string executable = @"E:\206309_Gann_Kevin\git\Speech-To-Text\DeepSpeech\dist\DeepSpeech_Script.exe";
             string arguments = $"\"{weightsPath_Unix}\" \"{scorerPath_Unix}\" \"{inputAudioPath_Unix}\" \"{outputTextPath_Unix}\"";
-            
+            */
             #endregion Option 2: Executable
 
             ProcessStartInfo processStartInfo = new()
@@ -129,7 +129,7 @@ namespace VideoTranslationTool.SpeechToTextModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 
