@@ -200,6 +200,11 @@ namespace VideoTranslationTool.TextToSpeechModule
             vocoderWeightPath = vocoderWeightPath.Replace(@"\", "/");
             vocoderConfigPath = vocoderConfigPath.Replace(@"\", "/");
             text = text.Replace("\r\n", "\n");
+
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
+
+            File.WriteAllText(inputTextPath, text);
             #endregion Inputs
 
             #region Process
@@ -219,18 +224,18 @@ namespace VideoTranslationTool.TextToSpeechModule
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\TensorFlowTTS\TensorFlowTTS_Script.py";
-            string tensorflowttsArguments = $"\"{script}\" \"{text}\" \"{SynthesizerName}\" \"{synthesizerWeightPath}\" \"{synthesizerConfigPath}\" \"{VocoderName}\" \"{vocoderWeightPath}\" \"{vocoderConfigPath}\" \"{processorPath}\" \"{outputAudioPath}\"";
+            string tensorflowttsArguments = $"\"{script}\" \"{inputTextPath_Unix}\" \"{SynthesizerName}\" \"{synthesizerWeightPath}\" \"{synthesizerConfigPath}\" \"{VocoderName}\" \"{vocoderWeightPath}\" \"{vocoderConfigPath}\" \"{processorPath}\" \"{outputAudioPath}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate TensorFlowTTS" + "&&" + "python " + tensorflowttsArguments;
-
+            // NOTE: requires another check for errors!
+            
             #endregion Option 1: Python script
 
             #region Option 2: Executable
             /*
-            string executable =;
-            string arguments = ;
-            //string executable = @"GoogleTranslate.exe";
-            //string arguments = $"\"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\TensorFlowTTS\dist\TensorFlowTTS_Script\TensorFlowTTS_Script.exe";
+            string arguments = $"\"{text}\" \"{SynthesizerName}\" \"{synthesizerWeightPath}\" \"{synthesizerConfigPath}\" \"{VocoderName}\" \"{vocoderWeightPath}\" \"{vocoderConfigPath}\" \"{processorPath}\" \"{outputAudioPath}\"";
+            // NOTE: requires another check for errors!
             */
             #endregion Option 2: Executable            
 
@@ -239,7 +244,7 @@ namespace VideoTranslationTool.TextToSpeechModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 
@@ -248,22 +253,8 @@ namespace VideoTranslationTool.TextToSpeechModule
             #endregion Process
 
             #region Outputs
-            StringBuilder newErrorStringBuilder = new StringBuilder();
-
-            string[] errorLines = errors.Split("\n", StringSplitOptions.RemoveEmptyEntries);
-            foreach (string errorLine in errorLines)
-            {
-                string[] lineParts = errorLine.Split(": ");
-                if (lineParts.Length > 1)
-                {
-                    if (!lineParts[1].StartsWith("I")) newErrorStringBuilder.AppendLine(errorLine);
-                }
-                else newErrorStringBuilder.AppendLine(errorLine);
-            }
-
-            string errorString = newErrorStringBuilder.ToString();
-            /* Handle errors and output */
-            if (errorString.Contains("Error")) throw new Exception(errorString);
+            if (errors != "") throw new Exception(errors);              // error check script
+            //if (errors.Contains("Error")) throw new Exception(errors);  // check if exe is used
             else return outputAudioPath;
             #endregion Outputs
         }

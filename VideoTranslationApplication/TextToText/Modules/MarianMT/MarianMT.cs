@@ -84,12 +84,16 @@ namespace VideoTranslationTool.TextToTextModule
             #region Inputs
             string weightsPath = _weightsPathDictionary[$"{sourceLanguage}-{targetLanguage}"];
             string outputTextPath = Path.GetTempPath() + "TranslatedText.txt";
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
 
             // Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/
             string outputTextPath_Unix = outputTextPath.Replace(@"\", "/");
             string weightsPath_Unix = weightsPath.Replace(@"\", "/");
 
             string sourceText_Unix = sourceText.Replace("\r\n", "\n");
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
+
+            File.WriteAllText(inputTextPath, sourceText_Unix);
             #endregion Inputs
 
             #region Process
@@ -98,15 +102,15 @@ namespace VideoTranslationTool.TextToTextModule
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Text-To-Text\MarianMT\MarianMT_Script.py";
-            string marianmtArguments = $"\"{script}\" \"{weightsPath_Unix}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
+            string marianmtArguments = $"\"{script}\" \"{weightsPath_Unix}\" \"{inputTextPath_Unix}\" \"{outputTextPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate MarianMT" + "&&" + "python " + marianmtArguments;
-
+            
             #endregion Option 1: Python script
 
-            #region Option 2: Executable - not working yet!
+            #region Option 2: Executable
             /*
-            string executable = @"MarianMT.exe";
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Text\MarianMT\dist\MarianMT_Script.exe";
             string arguments = $"\"{weightsPath_Unix}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
             */
             #endregion Option 2: Executable
@@ -116,7 +120,7 @@ namespace VideoTranslationTool.TextToTextModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 

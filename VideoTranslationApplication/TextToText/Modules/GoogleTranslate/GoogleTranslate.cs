@@ -76,30 +76,35 @@ namespace VideoTranslationTool.TextToTextModule
             #region Inputs
             string sourceLanguageCode = _languageCodeDictionary[sourceLanguage];
             string targetLanguageCode = _languageCodeDictionary[targetLanguage];
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
             string outputTextPath = Path.GetTempPath() + "TranslatedText.txt";
 
             // Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/
             string outputTextPath_Unix = outputTextPath.Replace(@"\", "/");
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
             string sourceText_Unix = sourceText.Replace("\r\n", "\n");
+
+            File.WriteAllText(inputTextPath, sourceText_Unix);
+
             #endregion Inputs
 
             #region Process
             #region Option 1: Python script
-            /*
+
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Text-To-Text\GoogleTranslate\GoogleTranslate_Script.py";
-            string googletranslateArguments = $"\"{script}\" \"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
+            string googletranslateArguments = $"\"{script}\" \"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{inputTextPath_Unix}\" \"{outputTextPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate GoogleTranslate" + "&&" + "python " + googletranslateArguments;
-            */
+            
             #endregion Option 1: Python script
 
             #region Option 2: Executable
-
+            /*
             string executable = @"E:\206309_Gann_Kevin\git\Text-To-Text\GoogleTranslate\dist\GoogleTranslate_Script.exe";
             string arguments = $"\"{sourceLanguageCode}\" \"{targetLanguageCode}\" \"{sourceText_Unix}\" \"{outputTextPath_Unix}\"";
-
+            */
             #endregion Option 2: Executable
 
             /* Process executable */
@@ -108,7 +113,7 @@ namespace VideoTranslationTool.TextToTextModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };            
             
