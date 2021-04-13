@@ -92,25 +92,30 @@ namespace VideoTranslationTool.TextToSpeechModule
             /* Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/ */
             string outputAudioPath_Unix = outputAudioPath.Replace(@"\", "/");
             string text_Unix = text.Replace("\r\n", "\n");
+
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
+
+            File.WriteAllText(inputTextPath, text_Unix);
             #endregion Inputs
 
             #region Process
             #region Option 1: Python script
-            /*
+            
             string executable = "cmd.exe";
 
             string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\GoogleTTS\GoogleTTS_Script.py";
-            string googlettsArguments = $"\"{script}\" \"{text_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
+            string googlettsArguments = $"\"{script}\" \"{inputTextPath_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate GoogleTTS" + "&&" + "python " + googlettsArguments;
-            */
+            
             #endregion Option 1: Python script
 
             #region Option 2: Executable
-
+            /*
             string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\GoogleTTS\dist\GoogleTTS_Script.exe";
             string arguments = $"\"{text_Unix}\" \"{languageCode}\" \"{outputAudioPath_Unix}\"";
-            
+            */
             #endregion Option 2: Executable
 
             ProcessStartInfo processStartInfo = new()
@@ -118,7 +123,7 @@ namespace VideoTranslationTool.TextToSpeechModule
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 
