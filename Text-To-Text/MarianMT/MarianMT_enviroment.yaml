@@ -1,14 +1,23 @@
 name: MarianMT
 channels:
- - anaconda
- - pytorch
  - huggingface
+ - pytorch
+ - conda-forge
+ - anaconda
 dependencies:
  - python
  - pytorch
  - torchvision
- - cudatoolkit=11.0
+ - torchaudio
+ - cudatoolkit=11.1
+# - pytorch
+# - torchvision
+# - cudatoolkit=11.0
  - transformers
+# Required for pyinstaller
+ - regex
+ - sacremoses
+ - filelock
 
 # conda activate MarianMT
 
