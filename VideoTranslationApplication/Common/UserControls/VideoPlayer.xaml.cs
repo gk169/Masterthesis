@@ -45,6 +45,16 @@ namespace VideoTranslationTool.UserControls
             timer.Interval = TimeSpan.FromSeconds(0.25);
             timer.Tick += UpdateProgressSlider;
             timer.Start();
+            Player.MediaOpened += Media_Opened;
+            Slider.Minimum = 0;
+            Slider.Maximum = 1;
+            TimeTotalTextbox.Text = "00:00";
+        }
+
+        private void Media_Opened(object sender, RoutedEventArgs e)
+        {
+            Slider.Maximum = Player.NaturalDuration.TimeSpan.TotalSeconds;
+            TimeTotalTextbox.Text = Player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");            
         }
         #endregion Constructors
 
@@ -63,10 +73,14 @@ namespace VideoTranslationTool.UserControls
         /// </summary>
         private void OnFilePathChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is not null)
+            Player.Stop();
+            Player.Close();
+
+            if (e.NewValue is not null and not "")
             {
-                Player.Stop();
                 Player.Source = new Uri(e.NewValue.ToString());
+                Player.Play();
+                Player.Stop();
             }
         }
 
@@ -110,23 +124,17 @@ namespace VideoTranslationTool.UserControls
             // Dont update while slider is in drag state
             if (!_userIsDraggingSlider)
             {
-                double value = 0;
-                double maximum = 1;
-                string timePlayed = "00:00";
-                string timeTotal = "00:00";
+                double value = 0;                
+                string timePlayed = "00:00";                
 
                 if (Player.NaturalDuration.HasTimeSpan)
                 {
-                    value = Player.Position.TotalSeconds;
-                    maximum = Player.NaturalDuration.TimeSpan.TotalSeconds;
-                    timePlayed = Player.Position.ToString(@"mm\:ss");
-                    timeTotal = Player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                    value = Player.Position.TotalSeconds;                    
+                    timePlayed = Player.Position.ToString(@"mm\:ss");                    
                 }
 
-                Slider.Value = value;
-                Slider.Maximum = maximum;
-                TimePlayedTextbox.Text = timePlayed;
-                TimeTotalTextbox.Text = timeTotal;
+                Slider.Value = value;                
+                TimePlayedTextbox.Text = timePlayed;                
             }
         }
         #endregion Methods

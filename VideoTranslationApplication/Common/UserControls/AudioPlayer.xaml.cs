@@ -12,7 +12,7 @@ namespace VideoTranslationTool.UserControls
     public partial class AudioPlayer : UserControl
     {
         #region Members
-        private string _filePath;
+        //private string _filePath;
         private readonly MediaPlayer _mediaPlayer = new();
         private bool _userIsDraggingSlider = false;
 
@@ -45,6 +45,12 @@ namespace VideoTranslationTool.UserControls
             timer.Interval = TimeSpan.FromSeconds(0.25);
             timer.Tick += UpdateProgressSlider;
             timer.Start();
+            _mediaPlayer.MediaEnded += Media_Ended;
+        }
+
+        private void Media_Ended(object sender, EventArgs e)
+        {
+            _mediaPlayer.Stop();
         }
         #endregion Constructors
 
@@ -63,11 +69,12 @@ namespace VideoTranslationTool.UserControls
         /// </summary>
         private void OnFilePathChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != null)
-            {
-                _filePath = e.NewValue.ToString();
-                _mediaPlayer.Stop();
-                _mediaPlayer.Open(new Uri(_filePath));
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+
+            if (e.NewValue is not null and not "")
+            {              
+                _mediaPlayer.Open(new Uri(e.NewValue.ToString()));
             }
         }
 
