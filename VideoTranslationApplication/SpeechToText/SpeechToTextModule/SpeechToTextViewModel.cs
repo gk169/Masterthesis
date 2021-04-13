@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using VideoTranslationTool.Commands;
+using VideoTranslationTool.FileUtils;
 
 namespace VideoTranslationTool.SpeechToTextModule
 {
@@ -186,12 +187,22 @@ namespace VideoTranslationTool.SpeechToTextModule
         /// </summary>
         private void OpenFile()
         {
-            OpenFileDialog openFileDialog = new() { Filter = "Audio file (*.mp3;*.wav)|*.mp3;*.wav", };
+            OpenFileDialog openFileDialog = new() { Filter = "Audio source (*.mp3;*.wav; *.mp4)|*.mp3;*.wav;*.mp4", };
 
             if (AudioPath is null or "") openFileDialog.InitialDirectory = @"C:\KeinVerzeichnis";
             else openFileDialog.InitialDirectory = Path.GetDirectoryName(AudioPath); // open at latest selection
 
-            if (openFileDialog.ShowDialog() == true) AudioPath = openFileDialog.FileName;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string file = openFileDialog.FileName;
+                if (Path.GetExtension(file) == ".mp4")
+                {
+                    string audioPath_mp3 = Path.GetTempPath() + "ToTranscribe.mp3";
+                    AudioConverter.Mp4ToMp3(file, audioPath_mp3);
+                    file = audioPath_mp3;
+                }
+                AudioPath = file;
+            }
         }
 
         /// <summary>
