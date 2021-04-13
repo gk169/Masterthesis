@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using VideoTranslationTool.FileUtils;
 
 namespace VideoTranslationTool.TextToSpeechModule
@@ -17,7 +18,7 @@ namespace VideoTranslationTool.TextToSpeechModule
         private Dictionary<string, string> _encoderPathDictionary;          // "Language" - EncoderPath
         private Dictionary<string, string> _synthesizerPathDictionary;      // "Language" - SynthesizerPath
         private Dictionary<string, string> _vocoderPathDictionary;          // "Language" - VocoderPath
-        private Dictionary<string, string> _voiceAudioFilePathDictionary;   // "Language + Voice" - VoicePath
+        private Dictionary<string, string> _voiceAudioFilePathDictionary;   // "Voice" - VoicePath
         #endregion Members
 
         #region Constructors
@@ -42,15 +43,16 @@ namespace VideoTranslationTool.TextToSpeechModule
             _vocoderPathDictionary = new Dictionary<string, string>();
             _voiceAudioFilePathDictionary = new Dictionary<string, string>();
 
-            Dictionary<string, List<string>> supportedVoices = new();
-
             // Load weights paths,languages and voices
-            // Expected: rtvcPath\<Language>\encoder.pt ..synthesizer.pt vocoder.pt <VoiceA (Gender)>.wav <VoiceB (Gender)>.mp3
-            string rtvcPath = @"E:\206309_Gann_Kevin\weights\RTVC";
+            // Expected:
+            // rtvcPath\Languages\<Language>\encoder.pt synthesizer.pt vocoder.pt
+            // rtvcPath\Voices\<VoiceA>.wav <VoiceB>.mp3
+            
+            string languagesPath = @"E:\206309_Gann_Kevin\weights\RTVC\Languages";
 
-            string[] folderPaths = Directory.GetDirectories(rtvcPath);
+            string[] languageFolders = Directory.GetDirectories(languagesPath);
 
-            foreach (string folder in folderPaths)
+            foreach (string folder in languageFolders)
             {
                 string language = new DirectoryInfo(folder).Name;
 
@@ -60,9 +62,6 @@ namespace VideoTranslationTool.TextToSpeechModule
                 string synthesizerPath = "";
                 string vocoderPath = "";
 
-                Dictionary<string, string> folderVoicePaths = new(); // "Language + Voice" - VoicePath
-                List<string> folderVoices = new(); // List of voices
-
                 foreach (string file in filePaths)
                 {
                     // Get folders encoder, synthesizer and vocoder
@@ -71,14 +70,7 @@ namespace VideoTranslationTool.TextToSpeechModule
                         case "encoder.pt": encoderPath = file; break;
                         case "synthesizer.pt": synthesizerPath = file; break;
                         case "vocoder.pt": vocoderPath = file; break;
-                    }
-
-                    // Get folders voices
-                    if (Path.GetExtension(file) is /* ".mp3" or*/ ".wav")
-                    {
-                        string voice = Path.GetFileNameWithoutExtension(file);
-                        if (folderVoicePaths.TryAdd($"{language} + {voice}", file)) folderVoices.Add(voice);
-                    }
+                    }                    
                 }
 
                 // if language is valid -> add encoder, synthesizer, vocoder and voices
@@ -87,14 +79,31 @@ namespace VideoTranslationTool.TextToSpeechModule
                     _encoderPathDictionary.TryAdd(language, encoderPath);
                     _synthesizerPathDictionary.TryAdd(language, synthesizerPath);
                     _vocoderPathDictionary.TryAdd(language, vocoderPath);
-
-                    foreach (var voicePath in folderVoicePaths)
-                    {
-                        _voiceAudioFilePathDictionary.TryAdd(voicePath.Key, voicePath.Value);
-                    }
-
-                    supportedVoices.TryAdd(language, folderVoices);
                 }
+            }
+
+            string voicesPath = @"E:\206309_Gann_Kevin\weights\RTVC\Voices";
+
+            string[] voiceFiles = Directory.GetFiles(voicesPath);
+
+            foreach (string file in voiceFiles)
+            {
+                // Get folders voices
+                if (Path.GetExtension(file) is ".wav")
+                {
+                    string voice = Path.GetFileNameWithoutExtension(file);
+                    _voiceAudioFilePathDictionary.TryAdd(voice, file);
+                    //if (folderVoicePaths.TryAdd($"{language} + {voice}", file)) folderVoices.Add(voice);
+                }
+            }
+
+            // Create dictinary
+            Dictionary<string, List<string>> supportedVoices = new();
+            List<string> voices = _voiceAudioFilePathDictionary.Keys.ToList();
+            
+            foreach (string language in _encoderPathDictionary.Keys)
+            {
+                supportedVoices.TryAdd(language, voices);
             }
 
             return supportedVoices;
@@ -116,7 +125,7 @@ namespace VideoTranslationTool.TextToSpeechModule
         public override string Synthesize(string text, string language, string voice)
         {
             #region Inputs
-            string audioSourcePath = _voiceAudioFilePathDictionary[$"{language} + {voice}"];
+            string audioSourcePath = _voiceAudioFilePathDictionary[voice];
 
             // If file is mp3 -> convert to wav
             if (Path.GetExtension(audioSourcePath) == ".mp3")
@@ -140,6 +149,10 @@ namespace VideoTranslationTool.TextToSpeechModule
             string vocoderPath_Unix = vocoderPath.Replace(@"\", "/");
 
             string sourceText_Unix = text.Replace("\r\n", "\n");
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
+
+            File.WriteAllText(inputTextPath, sourceText_Unix);
             #endregion Inputs
 
             #region Process
@@ -147,28 +160,27 @@ namespace VideoTranslationTool.TextToSpeechModule
 
             string executable = "cmd.exe";
             string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\RTVC\RTVC_Script.py";
-            string rtvcArguments = $"\"{script}\" \"{inputAudioPath_Unix}\" \"{sourceText_Unix}\" \"{encoderPath_Unix}\" " +
+            string rtvcArguments = $"\"{script}\" \"{inputAudioPath_Unix}\" \"{inputTextPath_Unix}\" \"{encoderPath_Unix}\" " +
                                $"\"{synthesizerPath_Unix}\" \"{vocoderPath_Unix}\" \"{outputAudioPath_Unix}\"";
 
             string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate RTVC" + "&&" + "python " + rtvcArguments;
-
+            
             #endregion Option 1: Python script
 
-            #region Option 2: Executable - not working yet!
+            #region Option 2: Executable
             /*
-            string executable = @"RTVC.exe";
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\RTVC\dist\RTVC_Script\RTVC_Script.exe";
             string arguments = $"\"{inputAudioPath_Unix}\" \"{sourceText_Unix}\" \"{encoderPath_Unix}\" " +
                                $"\"{synthesizerPath_Unix}\" \"{vocoderPath_Unix}\" \"{outputAudioPath_Unix}\"";
             */
             #endregion Option 2: Executable
 
-            /* Process executable */
             ProcessStartInfo processStartInfo = new()
             {
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = false,//TODO
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 
