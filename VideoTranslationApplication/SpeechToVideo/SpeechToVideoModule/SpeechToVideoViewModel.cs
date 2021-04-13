@@ -195,12 +195,20 @@ namespace VideoTranslationTool.SpeechToVideoModule
         /// </summary>
         private void Generate()
         {
-            string newVideoPath = "";
+            Cursor previousCursor = Application.Current.MainWindow.Cursor;
+
+            Application.Current.MainWindow.Cursor = Cursors.Wait;
+            
+            OutputVideoPath = null; // Set video to off, unload file
+
+            string newVideoPath = null;
 
             try { newVideoPath = _module.Generate(InputAudioPath, InputVideoPath); }
             catch (Exception e) { MessageBox.Show(e.ToString()); }
 
             OutputVideoPath = newVideoPath;
+
+            Application.Current.MainWindow.Cursor = previousCursor;
         }
 
         /// <summary>
