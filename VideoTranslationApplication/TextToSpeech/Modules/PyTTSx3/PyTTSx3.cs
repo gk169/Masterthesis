@@ -13,7 +13,7 @@ namespace VideoTranslationTool.TextToSpeechModule
     public class PyTTSx3 : TextToSpeech
     {
         #region Members
-        private Dictionary<string, string> _voiceIdDictionary; // "voiceId-voiceName (voiceGender)" - "voiceID"
+        private Dictionary<string, Dictionary<string, string>> _voiceIdDictionary; // "Language - VoiceNames - IDs"
         #endregion Members
 
         #region Constructors
@@ -32,44 +32,73 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// </returns>
         protected override Dictionary<string, List<string>> LoadSupportedVoices()
         {
-            string filePath = @"PyTTSx3_SupportedVoices.txt";
+            #region Inputs
+            string supportedLanguagesFilePath = Path.GetTempPath() + "PyTTSx3_SupportedVoices.txt";
 
-            // Read Supported Languages from file
-            string file = File.ReadAllText(filePath);
+            /* Transform arguments (win paths to unix paths) https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/ */
+            string supportedLanguagesFilePath_Unix = supportedLanguagesFilePath.Replace(@"\", "/");
+            #endregion Inputs
 
-            // Split after each new line
-            string[] lines = file.Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+            #region Process
+            #region Option 1: Python script
+            
+            string executable = "cmd.exe";
 
-            // Discard first and second entry (SourceUrl \n Language - Name - Gender - ID)
-            lines = lines[2..lines.Length];
+            string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\PyTTSx3\GetVoices\PyTTSx3_GetVoices.py";
+            string pyttsx3GetVoicesArguments = $"\"{script}\" \"{supportedLanguagesFilePath_Unix}\"";
 
-            // Clear previous entries
-            _voiceIdDictionary = new Dictionary<string, string>();
-            Dictionary<string, List<string>> supportedVoices = new();
+            string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate PyTTSx3" + "&&" + "python " + pyttsx3GetVoicesArguments;
+            
+            #endregion Option 1: Python script
 
-            // Split line in language ([0]), voiceName ([1]), voiceGender ([2]) and voiceId ([3])
-            foreach (string line in lines)
+            #region Option 2: Executable
+            /*
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\PyTTSx3\GetVoices\dist\PyTTSx3_GetVoices\PyTTSx3_GetVoices.exe";
+            string arguments = $"\"{supportedLanguagesFilePath_Unix}\"";
+            */
+            #endregion Option 2: Executable            
+
+            ProcessStartInfo processStartInfo = new()
             {
-                string[] lineParts = line.Split(" \t", StringSplitOptions.RemoveEmptyEntries);
+                FileName = executable,
+                Arguments = arguments,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardError = true,
+            };
 
-                string language = lineParts[0];
-                string voiceName = lineParts[1];
-                string voiceGender = lineParts[2];
-                string voiceId = lineParts[3];
+            string errors = "";
+            using (Process process = Process.Start(processStartInfo)) { errors = process.StandardError.ReadToEnd(); }
+            #endregion Process
 
-                string voice = $"{voiceId}-{voiceName} ({voiceGender})";
+            #region Outputs
+            if (errors != "") throw new Exception(errors);
+            
+            string supportedLanguageFile = File.ReadAllText(supportedLanguagesFilePath);
 
-                _voiceIdDictionary.TryAdd(voice, voiceId);
+            _voiceIdDictionary = new Dictionary<string, Dictionary<string, string>>(); // Remove old dictionary
 
-                // Try to add (language - list of voices) as new entry to dictionary
-                if (!supportedVoices.TryAdd(language, new List<string>() { voice }))
-                {
-                    // if it fails -> add voice to list of voices
-                    supportedVoices[language].Add(voice);
-                }
+            foreach (string line in supportedLanguageFile.Split("\r\n", StringSplitOptions.RemoveEmptyEntries))
+            {
+                string[] lineParts = line.Split(" \t");
+                string name = lineParts[0];
+                string id = lineParts[1];
+                string language = lineParts[2].Split("(")[0];
+
+                if (_voiceIdDictionary.ContainsKey(language)) _voiceIdDictionary[language].TryAdd(name, id); // If language exists -> try to add new name
+                else _voiceIdDictionary.TryAdd(language, new Dictionary<string, string>() { { name, id } }); // If language doenst exist -> try to add new language entry
+            }
+
+            Dictionary<string, List<string>> supportedVoices = new Dictionary<string, List<string>>();
+            foreach (string language in _voiceIdDictionary.Keys)
+            {
+                List<string > voiceNames = new List<string>();
+                foreach (string voiceName in _voiceIdDictionary[language].Keys) voiceNames.Add(voiceName);
+                supportedVoices.TryAdd(language, voiceNames);
             }
 
             return supportedVoices;
+            #endregion Output
         }
 
         /// <summary>
@@ -89,40 +118,63 @@ namespace VideoTranslationTool.TextToSpeechModule
         /// </returns>
         public override string Synthesize(string text, string language, string voice)
         {
-            /* Arguments */
-            string outputAudioPath = Path.GetTempPath() + "SynthesizedAudio.mp3";
-            string voiceId = _voiceIdDictionary[voice];
+            #region Inputs
+            /* Arguments
+             * 1: Text
+             * 2: VoiceID
+             * 3: OutputAudioPath
+             */
+
+            string outputAudioPath = Path.GetTempPath() + "SynthesizedAudio.wav";
+            string voiceId = _voiceIdDictionary[language][voice];
 
             /* Transform arguments https://www.btelligent.com/blog/best-practice-arbeiten-in-python-mit-pfaden-teil-1/ */
             string outputAudioPath_Unix = outputAudioPath.Replace(@"\", "/");
-            string text_Unix = text.Replace("\r\n", "\n");
+            text = text.Replace("\r\n", "\n");
 
-            /* Executable */
-            // Option 1) Python script
-            string executable = @"C:\ProgramData\Anaconda3\envs\TTS\python.exe";
-            string script = @"D:\GitRepos\Masterthesis\git\Text-To-Speech\PyTTSx3_Script.py";
-            string arguments = $"\"{script}\" \"{text_Unix}\" \"{voiceId}\" \"{outputAudioPath_Unix}\"";
+            string inputTextPath = Path.GetTempPath() + "ToTranslateText.txt";
+            string inputTextPath_Unix = inputTextPath.Replace(@"\", "/");
 
-            //// Option 2) Generated executable
-            //string executable = @"PyTTSx3.exe";
-            //string arguments = $"\"{text_Unix}\" \"{voiceId}\" \"{outputAudioPath_Unix}\"";
+            File.WriteAllText(inputTextPath, text);
+            #endregion Inputs
 
-            /* Process executable */
+            #region Process
+            #region Option 1: Python script
+
+            string executable = "cmd.exe";
+            string script = @"E:\206309_Gann_Kevin\git\Text-To-Speech\PyTTSx3\PyTTSx3_Script.py";
+
+            string pyttsx3Arguments = $"\"{script}\" \"{inputTextPath_Unix}\" \"{voiceId}\" \"{outputAudioPath_Unix}\"";
+
+            string arguments = "/c " + @"C:\ProgramData\Anaconda3\Scripts\activate.bat" + "&&" + "activate PyTTSx3" + "&&" + "python " + pyttsx3Arguments;
+            
+            #endregion Option 1: Python script
+
+            #region Option 2: Executable
+            /*
+            string executable = @"E:\206309_Gann_Kevin\git\Text-To-Speech\PyTTSx3\dist\PyTTSx3_Script\PyTTSx3_Script.exe";
+            string arguments = $"\"{text}\" \"{voiceId}\" \"{outputAudioPath_Unix}\"";
+            */
+            #endregion Option 2: Executable
+
             ProcessStartInfo processStartInfo = new()
             {
                 FileName = executable,
                 Arguments = arguments,
                 UseShellExecute = false,
-                CreateNoWindow = true,
+                CreateNoWindow = false,
                 RedirectStandardError = true,
             };
 
             string errors = "";
             using (Process process = Process.Start(processStartInfo)) { errors = process.StandardError.ReadToEnd(); }
+            #endregion Process
 
+            #region Outputs
             /* Handle errors and output */
             if (errors != "") throw new Exception(errors);
             else return outputAudioPath;
+            #endregion Outputs
         }
         #endregion Methods
     }

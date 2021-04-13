@@ -1,4 +1,0 @@
-https://pyttsx3.readthedocs.io/en/latest/engine.html#module-pyttsx3.voice
-Language 	Name 	Gender 	ID
-German 	Hans 	Male 	Voice0 	FakeEntry!!
-German 	Isolde 	Female 	Voice1 	FakeEntry!!

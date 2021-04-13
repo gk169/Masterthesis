@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PyTTSx3_SupportedVoices.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="PyTTSx3_SupportedVoices.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\TextToSpeechModule\TextToSpeechModule.csproj" />
   </ItemGroup>
 
