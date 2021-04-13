@@ -16,5 +16,31 @@ namespace VideoTranslationTool.FileUtils
                 }
             }
         }
+        public static void Mp4ToMp3(string mp4File, string outputFile)
+        {
+            using (MediaFoundationReader mediaReader = new MediaFoundationReader(mp4File))
+            {
+                MediaFoundationEncoder.EncodeToMp3(mediaReader, outputFile);
+            }
+        }
+
+        public static void WavToMp3(string wavFile, string outputFile)
+        {
+            using (WaveFileReader waveReader = new WaveFileReader(wavFile))
+            {
+                MediaFoundationEncoder.EncodeToMp3(waveReader, outputFile);
+            }
+        }
+
+        public static void WavToWavPcm(string inputFile, string outputFile)
+        {
+            using(MediaFoundationReader mediaReader = new MediaFoundationReader(inputFile))
+            {
+                using(WaveStream pcmStream = WaveFormatConversionStream.CreatePcmStream(mediaReader))
+                {
+                    WaveFileWriter.CreateWaveFile(outputFile, pcmStream);
+                }
+            }
+        }
     }
 }
