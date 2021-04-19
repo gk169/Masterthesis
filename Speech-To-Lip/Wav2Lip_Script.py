@@ -4,6 +4,7 @@ from tqdm import tqdm
 import torch
 import ffmpeg
 import sys, pathlib, tempfile
+import math
 
 Wav2Lip_Path = str(pathlib.Path(__file__).parent.resolve().joinpath('Wav2Lip'))
 if not Wav2Lip_Path in sys.path:
@@ -35,13 +36,13 @@ Face_Detection_Batch_Size = 64 # bottleneck of the implementation
 Wav2Lip_Batch_Size = 1024
 
 # Nosmooth: default=False, Prevent smoothing face detections over a short temporal window
-Nosmooth = False
+Nosmooth = True
 
 Img_size = 96
 
 Temp_Path = pathlib.Path(tempfile.gettempdir())
 Temp_Audio_Path = str(Temp_Path.joinpath('temp.wav'))
-Temp_Video_Path = str(Temp_Path.joinpath('temp.avi'))
+Temp_Video_Path = str(Temp_Path.joinpath('temp.mp4'))
 
 Video_Path = pathlib.Path(Input_Video_Path)
 face_det_path = Video_Path.parent.joinpath(Video_Path.stem + ".npy")
@@ -56,15 +57,16 @@ video_stream = cv2.VideoCapture(Input_Video_Path)
 fps = video_stream.get(cv2.CAP_PROP_FPS)
 
 full_frames = []
-reading = True
-while reading:
+
+while video_stream.isOpened():
     reading, frame = video_stream.read()
-    full_frames.append(frame)
+    if reading: full_frames.append(frame)
+    else: break
     
 video_stream.release()
 toc = time()
 print("Reading video frames took: %fs" % (toc - tic))
-print ("Number of frames available for inference: %d" % len(full_frames))
+print ("Number of frames available: %d" % len(full_frames))
 
 print("Loading wav ...")
 tic = time()
@@ -84,22 +86,21 @@ while 1:
     i += 1
 toc = time()
 print("Loading wav took: %fs" % (toc - tic))
-print("Length of mel chunks: {}".format(len(mel_chunks)))
-
-full_frames = full_frames[:len(mel_chunks)]
+print("Number of mel chunks available: %d" % len(mel_chunks))
 
 if os.path.isfile(face_det_path):
     print("Loading detected faces...")
     face_det_results = np.load(face_det_path, allow_pickle=True)
 else:
     print("Detecting faces ...")
-    tic = time()
-
+    tic = time()    
     detector = face_detection.FaceAlignment(face_detection.LandmarksType._2D, flip_input=False, device=device)
-
     face_positions = []
-    for i in tqdm(range(0, len(full_frames), Face_Detection_Batch_Size),file=sys.stdout):
-        face_positions.extend(detector.get_detections_for_batch(np.array(full_frames[i : i + Face_Detection_Batch_Size])))
+    for i in tqdm(range(0, len(full_frames)-1, Face_Detection_Batch_Size),file=sys.stdout):
+        if i + Face_Detection_Batch_Size < len(full_frames):
+            face_positions.extend(detector.get_detections_for_batch(np.array(full_frames[i : i + Face_Detection_Batch_Size])))
+        else:
+            face_positions.extend(detector.get_detections_for_batch(np.array(full_frames[i : len(full_frames)])))
 
     del detector
 
@@ -129,9 +130,31 @@ else:
             mouth_boxes[i] = np.mean(window, axis=0)
 
     face_det_results = [[image[y1:y2, x1:x2], (y1, y2, x1, x2)] for image, (x1, y1, x2, y2) in zip(full_frames, mouth_boxes)]
-    np.save(face_det_path, face_det_results)#, allow_pickle=False)
+    np.save(face_det_path, face_det_results)
     toc = time()
     print("Detecting faces took: %fs" % (toc - tic))
+
+print("Number of detected faces available: %d" % len(face_det_results))
+
+mel_chunks = np.array(mel_chunks)
+full_frames = np.array(full_frames)
+
+#print(mel_chunks.shape)
+#print(full_frames.shape)
+#print(face_det_results.shape)
+
+if len(mel_chunks) > len(full_frames):
+    repeats = math.ceil(len(mel_chunks) / len(full_frames))
+    #print("repeats: %d" % repeats)
+    full_frames = np.tile(full_frames, (repeats, 1, 1, 1))
+    face_det_results = np.tile(face_det_results, (repeats,1))
+
+#print(full_frames.shape)
+#print(face_det_results.shape)
+#input()
+
+full_frames = full_frames[:len(mel_chunks)]
+face_det_results = face_det_results[:len(mel_chunks)]
 
 def datagen(frames, face_det_results, mels):
     img_batch, mel_batch, frame_batch, coords_batch = [], [], [], []
@@ -195,7 +218,8 @@ print("Loading weights took: %fs" % (toc - tic))
 print("Generating faces ...")
 tic = time()
 frame_h, frame_w = full_frames[0].shape[:-1]
-out = cv2.VideoWriter(Temp_Video_Path, cv2.VideoWriter_fourcc(*'DIVX'), fps, (frame_w, frame_h))
+
+out = cv2.VideoWriter(Temp_Video_Path, cv2.VideoWriter_fourcc(*'X264'), fps, (frame_w, frame_h)) #DIVX
  
 for i, (img_batch, mel_batch, frames, coords) in enumerate(tqdm(gen, total=int(np.ceil(float(len(mel_chunks))/Wav2Lip_Batch_Size)), file=sys.stdout)):
     
@@ -218,7 +242,7 @@ print("Generating video ...")
 tic = time()
 Input_Audio_Stream = ffmpeg.input(Input_Audio_Path)
 Input_Video_Stream = ffmpeg.input(Temp_Video_Path)
-Output_Video_Stream = ffmpeg.output(Input_Audio_Stream, Input_Video_Stream, Output_Video_Path)
+Output_Video_Stream = ffmpeg.output(Input_Audio_Stream, Input_Video_Stream, Output_Video_Path, **{'qscale:v': 3})
 Output_Video_Stream.run(overwrite_output=True)
 toc = time()
 print("Generating video took: %fs" % (toc - tic))
