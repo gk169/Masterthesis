@@ -46,9 +46,15 @@ namespace VideoTranslationTool.UserControls
             timer.Tick += UpdateProgressSlider;
             timer.Start();
             Player.MediaOpened += Media_Opened;
+            Player.MediaEnded += Media_Ended;
             Slider.Minimum = 0;
             Slider.Maximum = 1;
             TimeTotalTextbox.Text = "00:00";
+        }
+
+        private void Media_Ended(object sender, RoutedEventArgs e)
+        {
+            Player.Stop();
         }
 
         private void Media_Opened(object sender, RoutedEventArgs e)
