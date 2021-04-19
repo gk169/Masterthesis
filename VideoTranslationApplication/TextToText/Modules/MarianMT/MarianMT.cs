@@ -129,7 +129,7 @@ namespace VideoTranslationTool.TextToTextModule
             #endregion Process
 
             #region Outputs
-            if (errors.Contains("Error")) throw new Exception(errors);
+            if (errors != "") throw new Exception(errors);
             else return File.ReadAllText(outputTextPath);
             #endregion Outputs
         }
