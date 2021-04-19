@@ -9,6 +9,7 @@ import soundfile as sf
 import sys
 from time import time
 import numpy as np
+import os
 
 from tensorflow_tts.inference import TFAutoModel
 from tensorflow_tts.inference import AutoConfig
@@ -29,6 +30,10 @@ Processor = sys.argv[8]                 #ljspeech_mapper.json
 
 Output_Audio_Path = sys.argv[9]         #.wav
 tic_all = time()
+
+if os.path.exists(Output_Audio_Path):
+    print("Deleting previous ...")
+    os.remove(Output_Audio_Path)
 
 print("Loading text...")
 tic = time()
