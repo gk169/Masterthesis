@@ -1,5 +1,5 @@
 [submodule "Speech-To-Lip/Wav2Lip"]
-	path = SpeechToVideoSystems1/Wav2Lip
+	path = SpeechToVideoSystems/Wav2Lip/Wav2Lip
 	url = https://github.com/gk169/Wav2Lip.git
 [submodule "Text-To-Speech/RTVC/RealTimeVoiceCloning"]
 	path = TextToSpeechSystems/RTVC/RealTimeVoiceCloning
